@@ -7,42 +7,36 @@
 <title>Robotics Code Arena | Grade 8</title>
 
 <style>
+
 /* =========================================================
-   ROBOTICS CODE ARENA — V4
+   ROBOTICS CODE ARENA V5
+   COMIC ARENA EDITION
    Grade 8 Robotics
-   Arena-inspired classroom practice platform
    ========================================================= */
 
 :root{
-    --bg:#080b10;
-    --bg2:#0d1118;
-    --panel:#111722;
-    --panel2:#151c28;
-    --panel3:#1a2230;
+    --navy:#07152f;
+    --navy2:#0b2047;
+    --blue:#1769ff;
+    --blue2:#34a5ff;
 
-    --line:#293445;
-    --line2:#35445a;
+    --red:#f23846;
+    --red2:#c91e31;
 
-    --text:#f3f6fa;
-    --muted:#8f9bad;
-    --muted2:#69778a;
+    --yellow:#ffd83d;
+    --yellow2:#ffbd22;
 
-    --red:#e5484d;
-    --red-dark:#9f2f34;
-    --red-soft:rgba(229,72,77,.12);
-
-    --blue:#4c8dff;
-    --blue-soft:rgba(76,141,255,.12);
-
-    --yellow:#e6bd4a;
-    --yellow-soft:rgba(230,189,74,.12);
-
-    --green:#55b98a;
-    --green-soft:rgba(85,185,138,.12);
-
+    --cream:#fffbea;
     --white:#ffffff;
+    --ink:#08101f;
 
-    --shadow:0 22px 60px rgba(0,0,0,.35);
+    --muted:#aebdd7;
+    --green:#46d88a;
+
+    --outline:#050b16;
+
+    --comic-shadow:
+        7px 7px 0 var(--outline);
 }
 
 *{
@@ -58,33 +52,37 @@ body{
     min-height:100vh;
 
     font-family:
-        Inter,
+        "Trebuchet MS",
         "Segoe UI",
         Arial,
-        Helvetica,
         sans-serif;
 
-    color:var(--text);
+    color:var(--white);
 
     background:
         radial-gradient(
-            circle at 20% 0%,
-            rgba(76,141,255,.08),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 90% 20%,
-            rgba(229,72,77,.08),
+            circle at 10% 15%,
+            rgba(23,105,255,.35),
             transparent 28%
         ),
-        var(--bg);
+        radial-gradient(
+            circle at 90% 25%,
+            rgba(242,56,70,.18),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #06142e,
+            #0a2450 50%,
+            #07162f
+        );
 
     overflow-x:hidden;
 }
 
 
 /* =========================================================
-   SUBTLE BACKGROUND GRID
+   COMIC HALFTONE BACKGROUND
    ========================================================= */
 
 body::before{
@@ -93,38 +91,52 @@ body::before{
     position:fixed;
     inset:0;
 
+    z-index:-2;
+
     pointer-events:none;
 
+    opacity:.18;
+
     background-image:
-        linear-gradient(
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.018) 1px,
+        radial-gradient(
+            rgba(255,255,255,.38) 1px,
             transparent 1px
         );
 
-    background-size:40px 40px;
+    background-size:18px 18px;
+}
 
-    mask-image:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.8),
-            transparent 90%
-        );
+
+/* diagonal comic streak */
+
+body::after{
+    content:"";
+
+    position:fixed;
+
+    width:550px;
+    height:1000px;
+
+    top:-300px;
+    right:-330px;
 
     z-index:-1;
+
+    transform:rotate(35deg);
+
+    background:
+        rgba(255,216,61,.055);
+
+    pointer-events:none;
 }
 
 
 /* =========================================================
-   TOP BAR
+   HEADER
    ========================================================= */
 
 .topbar{
-    min-height:68px;
+    min-height:74px;
 
     padding:0 5%;
 
@@ -134,15 +146,19 @@ body::before{
 
     gap:20px;
 
-    background:rgba(8,11,16,.88);
-
-    border-bottom:1px solid #202936;
-
-    backdrop-filter:blur(14px);
-
     position:sticky;
     top:0;
-    z-index:50;
+
+    z-index:100;
+
+    background:
+        rgba(5,16,38,.96);
+
+    border-bottom:
+        4px solid var(--outline);
+
+    box-shadow:
+        0 4px 0 var(--yellow);
 }
 
 .brand{
@@ -152,103 +168,99 @@ body::before{
 }
 
 .brandMark{
-    width:36px;
-    height:36px;
+    width:43px;
+    height:43px;
 
     display:grid;
     place-items:center;
 
-    border:1px solid var(--red);
-    border-radius:6px;
+    transform:rotate(-4deg);
 
-    color:var(--red);
+    border:3px solid var(--outline);
 
-    font-family:Consolas,monospace;
-    font-size:15px;
-    font-weight:900;
+    background:var(--yellow);
+
+    color:var(--ink);
 
     box-shadow:
-        0 0 20px rgba(229,72,77,.08);
+        4px 4px 0 var(--red);
+
+    font-family:Consolas,monospace;
+    font-size:14px;
+    font-weight:900;
 }
 
 .brandName{
-    font-size:13px;
-    font-weight:900;
+    font-size:15px;
+    font-weight:1000;
 
-    letter-spacing:1.3px;
+    letter-spacing:1px;
 }
 
 .brandSub{
     margin-top:2px;
 
-    color:var(--muted2);
+    color:var(--yellow);
 
-    font-size:9px;
-    font-weight:700;
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1.5px;
+}
+
+.gradeTag{
+    padding:8px 13px;
+
+    transform:rotate(2deg);
+
+    border:3px solid var(--outline);
+
+    background:var(--red);
+
+    color:white;
+
+    box-shadow:
+        4px 4px 0 var(--yellow);
+
+    font-size:10px;
+    font-weight:1000;
 
     letter-spacing:1px;
 }
 
-.gradeTag{
-    padding:7px 10px;
-
-    border:1px solid var(--line);
-    border-radius:5px;
-
-    color:#aab5c5;
-
-    font-size:9px;
-    font-weight:900;
-
-    letter-spacing:1.2px;
-}
-
 
 /* =========================================================
-   ARENA NOTICE
+   NOTICE STRIP
    ========================================================= */
 
 .noticeBar{
-    min-height:38px;
+    min-height:42px;
+
+    padding:10px 20px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    padding:8px 20px;
+    background:var(--yellow);
 
-    border-bottom:1px solid rgba(230,189,74,.18);
+    border-bottom:
+        3px solid var(--outline);
 
-    background:
-        rgba(230,189,74,.045);
-
-    color:#d3c27d;
-
-    font-size:10px;
-    font-weight:700;
-
-    letter-spacing:.6px;
+    color:var(--ink);
 
     text-align:center;
-}
 
-.noticePrefix{
-    margin-right:10px;
-
-    color:var(--yellow);
-
+    font-size:10px;
     font-weight:900;
 }
 
-#noticeText{
-    transition:
-        opacity .25s ease,
-        transform .25s ease;
-}
+.noticePrefix{
+    margin-right:8px;
 
-#noticeText.change{
-    opacity:0;
-    transform:translateY(4px);
+    color:var(--red);
+
+    font-weight:1000;
 }
 
 
@@ -257,162 +269,313 @@ body::before{
    ========================================================= */
 
 #entryScreen{
-    min-height:calc(100vh - 107px);
+    min-height:
+        calc(100vh - 116px);
 
-    padding:65px 22px 90px;
+    padding:
+        70px 24px 90px;
 
     display:flex;
     align-items:center;
     justify-content:center;
+
+    position:relative;
+
+    overflow:hidden;
 }
 
-.entryWrap{
-    width:min(1050px,100%);
 
-    display:grid;
-    grid-template-columns:1.15fr .85fr;
+/* giant comic background text */
 
-    gap:60px;
+#entryScreen::before{
+    content:"08";
 
-    align-items:center;
+    position:absolute;
+
+    left:-25px;
+    bottom:-70px;
+
+    color:
+        rgba(255,216,61,.08);
+
+    -webkit-text-stroke:
+        4px rgba(255,216,61,.08);
+
+    font-family:
+        Impact,
+        Arial Black,
+        sans-serif;
+
+    font-size:
+        clamp(250px,38vw,540px);
+
+    line-height:.8;
+
+    transform:rotate(-5deg);
+
+    pointer-events:none;
 }
 
-.heroLabel{
-    display:flex;
-    align-items:center;
-    gap:10px;
 
-    margin-bottom:17px;
+/* comic circle */
 
-    color:var(--red);
-
-    font-size:10px;
-    font-weight:900;
-
-    letter-spacing:2px;
-}
-
-.heroLabel::before{
+#entryScreen::after{
     content:"";
 
-    width:34px;
-    height:2px;
+    position:absolute;
 
-    background:var(--red);
+    width:370px;
+    height:370px;
+
+    right:-190px;
+    top:70px;
+
+    border:
+        30px solid rgba(242,56,70,.06);
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 0 35px rgba(255,216,61,.025);
+
+    pointer-events:none;
+}
+
+
+.entryWrap{
+    width:min(1100px,100%);
+
+    display:grid;
+    grid-template-columns:
+        1.15fr .85fr;
+
+    gap:65px;
+
+    align-items:center;
+
+    position:relative;
+    z-index:2;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.heroLabel{
+    width:max-content;
+
+    margin-bottom:19px;
+
+    padding:7px 12px;
+
+    transform:rotate(-2deg);
+
+    border:
+        3px solid var(--outline);
+
+    background:var(--yellow);
+
+    color:var(--ink);
+
+    box-shadow:
+        4px 4px 0 var(--red);
+
+    font-size:10px;
+    font-weight:1000;
+
+    letter-spacing:1.4px;
 }
 
 .hero h1{
     margin:0;
 
-    max-width:700px;
+    font-family:
+        Impact,
+        "Arial Black",
+        sans-serif;
 
-    font-size:clamp(45px,7vw,80px);
-    line-height:.94;
+    font-size:
+        clamp(55px,8vw,94px);
 
-    letter-spacing:-4px;
+    font-weight:900;
+
+    line-height:.87;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        6px 6px 0 var(--outline);
 }
 
 .hero h1 span{
-    color:var(--red);
+    display:inline-block;
+
+    margin-top:8px;
+
+    color:var(--yellow);
+
+    -webkit-text-stroke:
+        2px var(--outline);
+
+    transform:rotate(-1deg);
 }
 
 .heroText{
-    max-width:610px;
+    max-width:600px;
 
-    margin:24px 0 0;
+    margin-top:30px;
 
-    color:var(--muted);
+    padding-left:17px;
 
-    font-size:15px;
+    border-left:
+        5px solid var(--red);
+
+    color:#c7d5ee;
+
+    font-size:14px;
+
     line-height:1.75;
 }
 
 .heroMeta{
-    margin-top:30px;
+    margin-top:27px;
 
     display:flex;
     flex-wrap:wrap;
-    gap:8px;
+
+    gap:9px;
 }
 
 .heroMeta span{
-    padding:7px 9px;
+    padding:7px 10px;
 
-    border:1px solid var(--line);
-    border-radius:4px;
+    border:
+        2px solid var(--outline);
 
-    color:#78879a;
+    background:#102c5d;
 
-    font-size:9px;
-    font-weight:800;
+    box-shadow:
+        3px 3px 0 var(--outline);
+
+    color:#e8f2ff;
+
+    font-size:8px;
+    font-weight:1000;
 
     letter-spacing:.8px;
 }
 
 
-/* ENTRY CARD */
+/* =========================================================
+   REGISTRATION
+   ========================================================= */
 
 .registration{
+    padding:35px 29px 30px;
+
     position:relative;
 
-    padding:29px;
+    transform:rotate(1deg);
+
+    border:
+        4px solid var(--outline);
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(23,30,42,.96),
-            rgba(14,19,28,.98)
-        );
+        var(--cream);
 
-    border:1px solid var(--line);
-    border-radius:10px;
+    color:var(--ink);
 
-    box-shadow:var(--shadow);
+    box-shadow:
+        10px 10px 0 var(--red);
 
-    overflow:hidden;
+    overflow:visible;
 }
 
 .registration::before{
     content:"PLAYER REGISTRATION";
 
     position:absolute;
-    top:0;
-    left:0;
 
-    padding:6px 10px;
+    top:-18px;
+    left:20px;
+
+    padding:7px 11px;
+
+    transform:rotate(-2deg);
+
+    border:
+        3px solid var(--outline);
+
+    background:var(--yellow);
+
+    box-shadow:
+        3px 3px 0 var(--outline);
+
+    font-size:8px;
+    font-weight:1000;
+
+    letter-spacing:1px;
+}
+
+.registration::after{
+    content:"READY!";
+
+    position:absolute;
+
+    top:-42px;
+    right:-30px;
+
+    padding:11px 9px;
+
+    transform:rotate(9deg);
+
+    border:
+        3px solid var(--outline);
 
     background:var(--red);
 
     color:white;
 
-    font-size:8px;
-    font-weight:900;
+    box-shadow:
+        4px 4px 0 var(--outline);
 
-    letter-spacing:1.4px;
+    font-family:
+        Impact,
+        Arial Black,
+        sans-serif;
+
+    font-size:16px;
+
+    letter-spacing:1px;
 }
 
 .registrationTop{
-    margin-top:16px;
-    margin-bottom:25px;
+    margin:
+        8px 0 24px;
 }
 
 .registrationTop small{
-    color:var(--muted2);
+    color:#567;
 
-    font-size:9px;
-    font-weight:800;
+    font-size:8px;
+    font-weight:1000;
 
-    letter-spacing:1.4px;
+    letter-spacing:1.3px;
 }
 
 .registrationTop h2{
-    margin:6px 0 0;
+    margin:5px 0 0;
 
-    font-size:22px;
+    font-size:23px;
+
+    font-weight:1000;
 }
 
 .field{
-    margin-top:18px;
+    margin-top:17px;
 }
 
 .field label{
@@ -420,119 +583,126 @@ body::before{
 
     margin-bottom:7px;
 
-    color:#9aa7b9;
+    color:#37445c;
 
     font-size:9px;
-    font-weight:900;
+    font-weight:1000;
 
-    letter-spacing:1.2px;
+    letter-spacing:1px;
 }
 
 .field input{
     width:100%;
 
-    padding:13px 14px;
+    padding:13px;
 
-    border:1px solid var(--line2);
-    border-radius:5px;
+    border:
+        3px solid var(--outline);
 
-    background:#0c1119;
+    border-radius:0;
 
-    color:white;
+    background:white;
+
+    color:var(--ink);
 
     font-family:inherit;
     font-size:13px;
 
     outline:none;
 
-    transition:.2s;
-}
-
-.field input::placeholder{
-    color:#4e5c6e;
+    transition:.15s;
 }
 
 .field input:focus{
-    border-color:var(--red);
-
     box-shadow:
-        0 0 0 3px rgba(229,72,77,.08);
+        4px 4px 0 var(--yellow);
+
+    transform:
+        translate(-2px,-2px);
+}
+
+.field input::placeholder{
+    color:#8791a3;
 }
 
 .fixedGrade{
-    margin-top:18px;
+    margin-top:17px;
 
-    padding:12px 14px;
+    padding:12px 13px;
 
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
 
-    border:1px solid var(--line);
-    border-radius:5px;
+    border:
+        3px solid var(--outline);
 
-    background:#0c1119;
+    background:#e8f3ff;
 }
 
 .fixedGrade span:first-child{
-    color:#78879a;
+    color:#506078;
 
-    font-size:9px;
-    font-weight:900;
-
-    letter-spacing:1.1px;
+    font-size:8px;
+    font-weight:1000;
 }
 
 .fixedGrade span:last-child{
-    color:var(--text);
+    color:var(--blue);
 
     font-size:11px;
-    font-weight:900;
+    font-weight:1000;
 }
 
 .enterButton{
     width:100%;
 
-    margin-top:23px;
+    margin-top:22px;
 
     padding:14px;
 
-    border:1px solid var(--red);
-    border-radius:5px;
+    border:
+        3px solid var(--outline);
+
+    border-radius:0;
 
     background:var(--red);
 
     color:white;
 
-    font-family:inherit;
-    font-size:10px;
-    font-weight:900;
+    box-shadow:
+        5px 5px 0 var(--outline);
 
-    letter-spacing:1.4px;
+    font-family:inherit;
+
+    font-size:11px;
+    font-weight:1000;
+
+    letter-spacing:1px;
 
     cursor:pointer;
 
-    transition:.2s;
+    transition:.15s;
 }
 
 .enterButton:hover{
-    background:#f05257;
-
-    transform:translateY(-1px);
+    transform:
+        translate(-2px,-2px);
 
     box-shadow:
-        0 8px 25px rgba(229,72,77,.18);
+        8px 8px 0 var(--outline);
+
+    background:#ff4857;
 }
 
 .entryReminder{
     margin-top:17px;
 
-    color:#657386;
-
-    font-size:10px;
-    line-height:1.6;
+    color:#657189;
 
     text-align:center;
+
+    font-size:10px;
 }
 
 
@@ -543,18 +713,16 @@ body::before{
 #dashboard{
     display:none;
 
-    width:min(1180px,calc(100% - 34px));
+    width:
+        min(1180px,calc(100% - 34px));
 
-    margin:0 auto;
+    margin:auto;
 
-    padding:32px 0 75px;
+    padding:35px 0 80px;
 }
 
-
-/* PLAYER BAR */
-
 .playerBar{
-    padding:16px 18px;
+    padding:15px 18px;
 
     display:flex;
     align-items:center;
@@ -562,10 +730,13 @@ body::before{
 
     gap:20px;
 
-    background:rgba(17,23,34,.82);
+    border:
+        3px solid var(--outline);
 
-    border:1px solid var(--line);
-    border-radius:7px;
+    background:#0e2c60;
+
+    box-shadow:
+        5px 5px 0 var(--outline);
 }
 
 .playerLeft{
@@ -575,37 +746,47 @@ body::before{
 }
 
 .playerNumber{
-    width:39px;
-    height:39px;
+    width:43px;
+    height:43px;
 
     display:grid;
     place-items:center;
 
-    border:1px solid var(--red);
-    border-radius:4px;
+    transform:rotate(-3deg);
 
-    color:var(--red);
+    border:
+        3px solid var(--outline);
 
-    font-family:Consolas,monospace;
+    background:var(--yellow);
+
+    color:var(--ink);
+
+    box-shadow:
+        3px 3px 0 var(--red);
+
+    font-family:
+        Consolas,
+        monospace;
+
     font-size:11px;
-    font-weight:900;
+    font-weight:1000;
 }
 
 .playerInfo small{
     display:block;
 
-    margin-bottom:3px;
-
-    color:var(--muted2);
+    color:#84b7ff;
 
     font-size:8px;
-    font-weight:900;
+    font-weight:1000;
 
-    letter-spacing:1.2px;
+    letter-spacing:1px;
 }
 
 .playerInfo strong{
     display:block;
+
+    margin-top:3px;
 
     font-size:13px;
 }
@@ -613,9 +794,9 @@ body::before{
 .playerInfo span{
     display:block;
 
-    margin-top:3px;
+    margin-top:2px;
 
-    color:var(--muted);
+    color:#bdcce3;
 
     font-size:10px;
 }
@@ -623,54 +804,69 @@ body::before{
 .changePlayer{
     padding:8px 11px;
 
-    border:1px solid var(--line);
-    border-radius:4px;
+    border:
+        2px solid var(--outline);
 
-    background:transparent;
+    background:var(--cream);
 
-    color:#8592a4;
+    color:var(--ink);
+
+    box-shadow:
+        3px 3px 0 var(--outline);
 
     font-family:inherit;
-    font-size:8px;
-    font-weight:900;
 
-    letter-spacing:.8px;
+    font-size:8px;
+    font-weight:1000;
 
     cursor:pointer;
 }
 
-.changePlayer:hover{
-    border-color:#64748a;
-    color:white;
-}
 
-
-/* DASH INTRO */
+/* =========================================================
+   DASHBOARD HEADING
+   ========================================================= */
 
 .dashboardHeading{
-    margin:38px 0 25px;
+    margin:
+        43px 0 27px;
 }
 
 .dashboardHeading small{
-    color:var(--red);
+    display:inline-block;
 
-    font-size:9px;
-    font-weight:900;
+    padding:5px 9px;
 
-    letter-spacing:1.6px;
+    transform:rotate(-1deg);
+
+    border:
+        2px solid var(--outline);
+
+    background:var(--red);
+
+    box-shadow:
+        3px 3px 0 var(--outline);
+
+    color:white;
+
+    font-size:8px;
+    font-weight:1000;
+
+    letter-spacing:1.3px;
 }
 
 .dashboardHeading h1{
-    margin:7px 0;
+    margin:12px 0 6px;
 
-    font-size:30px;
-    letter-spacing:-1px;
+    font-size:33px;
+
+    font-weight:1000;
 }
 
 .dashboardHeading p{
     margin:0;
 
-    color:var(--muted);
+    color:#aebed8;
 
     font-size:12px;
 }
@@ -681,81 +877,138 @@ body::before{
    ========================================================= */
 
 .currentGame{
-    position:relative;
+    min-height:285px;
 
-    min-height:245px;
-
-    padding:31px;
+    padding:34px;
 
     display:grid;
-    grid-template-columns:1fr 300px;
+
+    grid-template-columns:
+        1fr 300px;
 
     gap:35px;
 
     align-items:center;
 
-    background:
-        linear-gradient(
-            120deg,
-            rgba(24,31,44,.98),
-            rgba(13,18,27,.98)
-        );
-
-    border:1px solid #3b2630;
-    border-radius:9px;
+    position:relative;
 
     overflow:hidden;
+
+    border:
+        4px solid var(--outline);
+
+    background:
+        linear-gradient(
+            125deg,
+            #1769ff,
+            #0c3980
+        );
+
+    box-shadow:
+        10px 10px 0 var(--outline);
 }
 
 .currentGame::before{
     content:"01";
 
     position:absolute;
-    right:-5px;
-    bottom:-52px;
 
-    color:rgba(229,72,77,.055);
+    right:-10px;
+    bottom:-60px;
 
-    font-family:Arial,sans-serif;
-    font-size:210px;
-    font-weight:900;
+    color:
+        rgba(255,255,255,.08);
+
+    -webkit-text-stroke:
+        3px rgba(255,255,255,.06);
+
+    font-family:
+        Impact,
+        Arial Black,
+        sans-serif;
+
+    font-size:245px;
 
     line-height:1;
+}
 
-    pointer-events:none;
+.currentGame::after{
+    content:"SENSE → READ → DECIDE → ACT";
+
+    position:absolute;
+
+    left:33px;
+    bottom:14px;
+
+    color:
+        rgba(255,255,255,.45);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:2px;
 }
 
 .currentEyebrow{
-    color:var(--red);
+    width:max-content;
 
-    font-size:9px;
-    font-weight:900;
+    padding:6px 9px;
 
-    letter-spacing:1.8px;
+    transform:rotate(-1deg);
+
+    border:
+        2px solid var(--outline);
+
+    background:var(--yellow);
+
+    color:var(--ink);
+
+    box-shadow:
+        3px 3px 0 var(--outline);
+
+    font-size:8px;
+    font-weight:1000;
+
+    letter-spacing:1.2px;
 }
 
 .currentGame h2{
-    margin:12px 0 7px;
+    margin:
+        17px 0 7px;
 
-    font-size:30px;
-    letter-spacing:-1px;
+    max-width:620px;
+
+    font-size:
+        clamp(27px,4vw,40px);
+
+    line-height:1;
+
+    font-weight:1000;
+
+    text-shadow:
+        3px 3px 0 rgba(0,0,0,.3);
 }
 
-.currentGame .componentLine{
-    color:#b6c0cd;
+.componentLine{
+    color:#d7e8ff;
 
     font-size:12px;
-    font-weight:700;
+    font-weight:900;
 }
 
-.currentGame .description{
+.description{
     max-width:650px;
 
-    margin-top:18px;
+    margin-top:17px;
 
-    color:var(--muted);
+    color:#d4e2f8;
 
     font-size:12px;
+
     line-height:1.65;
 }
 
@@ -773,23 +1026,27 @@ body::before{
 
     padding:10px 12px;
 
-    background:#0d121a;
+    border:
+        2px solid var(--outline);
 
-    border:1px solid var(--line);
-    border-radius:5px;
+    background:
+        rgba(6,20,47,.55);
+
+    box-shadow:
+        3px 3px 0 var(--outline);
 }
 
 .stat small{
     display:block;
 
-    margin-bottom:5px;
+    margin-bottom:4px;
 
-    color:#59687a;
+    color:#9fc6ff;
 
     font-size:7px;
-    font-weight:900;
+    font-weight:1000;
 
-    letter-spacing:1.2px;
+    letter-spacing:1px;
 }
 
 .stat strong{
@@ -798,48 +1055,75 @@ body::before{
 
 .difficulty{
     color:var(--yellow);
-    letter-spacing:2px;
 }
 
+
+/* GAME TICKET */
+
 .currentAction{
+    padding:
+        30px 21px 22px;
+
     position:relative;
     z-index:2;
 
-    padding:22px;
+    transform:rotate(1deg);
 
-    background:rgba(8,11,16,.65);
+    border:
+        4px solid var(--outline);
 
-    border:1px solid var(--line);
-    border-radius:7px;
+    background:var(--cream);
+
+    color:var(--ink);
+
+    box-shadow:
+        7px 7px 0 var(--red);
 
     text-align:center;
 }
 
+.currentAction::before{
+    content:"CURRENT CHALLENGE!";
+
+    position:absolute;
+
+    top:-17px;
+    left:50%;
+
+    padding:6px 9px;
+
+    transform:
+        translateX(-50%)
+        rotate(-2deg);
+
+    border:
+        3px solid var(--outline);
+
+    background:var(--yellow);
+
+    white-space:nowrap;
+
+    font-size:8px;
+    font-weight:1000;
+}
+
 .diamond{
-    width:50px;
-    height:50px;
-
-    margin:0 auto 17px;
-
-    display:grid;
-    place-items:center;
+    margin-bottom:6px;
 
     color:var(--red);
 
-    font-size:35px;
+    font-size:51px;
 
-    transform:rotate(0deg);
+    line-height:1;
 }
 
 .currentAction small{
     display:block;
 
-    color:#667589;
+    color:#667188;
 
     font-size:8px;
-    font-weight:900;
-
-    letter-spacing:1.2px;
+    font-weight:1000;
 }
 
 .currentAction strong{
@@ -847,7 +1131,7 @@ body::before{
 
     margin-top:5px;
 
-    font-size:12px;
+    font-size:11px;
 }
 
 .playCurrent{
@@ -857,71 +1141,94 @@ body::before{
 
     padding:12px;
 
-    border:1px solid var(--red);
-    border-radius:4px;
+    border:
+        3px solid var(--outline);
 
     background:var(--red);
 
     color:white;
 
-    font-family:inherit;
-    font-size:9px;
-    font-weight:900;
+    box-shadow:
+        4px 4px 0 var(--outline);
 
-    letter-spacing:1px;
+    font-family:inherit;
+
+    font-size:9px;
+    font-weight:1000;
 
     cursor:pointer;
+
+    transition:.15s;
+}
+
+.playCurrent:hover{
+    transform:
+        translate(-2px,-2px);
+
+    box-shadow:
+        6px 6px 0 var(--outline);
 }
 
 
 /* =========================================================
-   SECTION HEADER
+   SECTIONS
    ========================================================= */
 
 .arenaSection{
-    margin-top:48px;
+    margin-top:55px;
 }
 
 .sectionHeader{
-    margin-bottom:17px;
+    margin-bottom:20px;
 
     display:flex;
-    align-items:end;
+    align-items:flex-end;
     justify-content:space-between;
 
     gap:20px;
 }
 
 .sectionTitle small{
-    color:#68778a;
+    display:inline-block;
+
+    padding:5px 8px;
+
+    transform:rotate(-1deg);
+
+    border:
+        2px solid var(--outline);
+
+    background:var(--yellow);
+
+    color:var(--ink);
+
+    box-shadow:
+        3px 3px 0 var(--red);
 
     font-size:8px;
-    font-weight:900;
-
-    letter-spacing:1.5px;
+    font-weight:1000;
 }
 
 .sectionTitle h2{
-    margin:5px 0;
+    margin:
+        11px 0 5px;
 
-    font-size:20px;
+    font-size:25px;
 }
 
 .sectionTitle p{
     margin:0;
 
-    color:var(--muted);
+    color:#adbed8;
 
     font-size:11px;
 }
 
 .sectionRight{
-    color:#59687a;
+    color:#7991b7;
 
     font-size:8px;
     font-weight:900;
-
-    letter-spacing:1px;
 }
 
 
@@ -931,102 +1238,191 @@ body::before{
 
 .coreGrid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
 
-    gap:13px;
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
 }
 
 .coreCard{
-    min-height:235px;
+    min-height:255px;
 
-    padding:22px;
+    padding:23px;
 
     display:flex;
     flex-direction:column;
 
-    background:
-        linear-gradient(
-            150deg,
-            #141b27,
-            #0f151e
-        );
+    position:relative;
 
-    border:1px solid var(--line);
-    border-radius:7px;
+    overflow:hidden;
 
-    transition:.2s;
+    border:
+        4px solid var(--outline);
+
+    color:var(--ink);
+
+    box-shadow:
+        7px 7px 0 var(--outline);
+
+    transition:.18s;
+}
+
+.coreCard:nth-child(1){
+    background:#f8fbff;
+}
+
+.coreCard:nth-child(2){
+    background:var(--yellow);
+}
+
+.coreCard:nth-child(3){
+    background:#fff8e9;
 }
 
 .coreCard:hover{
-    transform:translateY(-3px);
-
-    border-color:#43526a;
+    transform:
+        translate(-3px,-3px);
 
     box-shadow:
-        0 16px 35px rgba(0,0,0,.2);
+        10px 10px 0 var(--outline);
+}
+
+
+/* COMIC BACKGROUND SYMBOLS */
+
+.coreCard:nth-child(1)::after{
+    content:"</>";
+
+    position:absolute;
+
+    right:-5px;
+    top:76px;
+
+    color:
+        rgba(23,105,255,.09);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:64px;
+    font-weight:1000;
+}
+
+.coreCard:nth-child(2)::after{
+    content:"●──●";
+
+    position:absolute;
+
+    right:8px;
+    top:84px;
+
+    color:
+        rgba(8,16,31,.10);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:26px;
+    font-weight:1000;
+}
+
+.coreCard:nth-child(3)::after{
+    content:"?";
+
+    position:absolute;
+
+    right:18px;
+    top:47px;
+
+    color:
+        rgba(242,56,70,.08);
+
+    font-family:
+        Impact,
+        Arial Black,
+        sans-serif;
+
+    font-size:115px;
 }
 
 .coreTop{
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+
+    position:relative;
+    z-index:2;
 }
 
 .suit{
-    font-size:31px;
+    font-size:34px;
     line-height:1;
 }
 
-.suit.diamondSuit{
+.diamondSuit,
+.heartSuit{
     color:var(--red);
 }
 
-.suit.clubSuit{
+.clubSuit{
     color:var(--blue);
-}
-
-.suit.heartSuit{
-    color:var(--yellow);
 }
 
 .openBadge{
     padding:5px 7px;
 
-    border:1px solid rgba(85,185,138,.25);
-    border-radius:4px;
+    transform:rotate(2deg);
 
-    background:var(--green-soft);
+    border:
+        2px solid var(--outline);
 
-    color:var(--green);
+    background:var(--red);
+
+    color:white;
+
+    box-shadow:
+        2px 2px 0 var(--outline);
 
     font-size:7px;
-    font-weight:900;
-
-    letter-spacing:1px;
+    font-weight:1000;
 }
 
 .coreCard h3{
-    margin:23px 0 5px;
+    margin:
+        25px 0 5px;
 
-    font-size:17px;
+    position:relative;
+    z-index:2;
+
+    font-size:19px;
+    font-weight:1000;
 }
 
 .coreSubtitle{
-    color:#718095;
+    position:relative;
+    z-index:2;
+
+    color:#52637f;
 
     font-size:9px;
-    font-weight:800;
-
-    letter-spacing:.5px;
+    font-weight:1000;
 }
 
 .coreDescription{
-    margin:14px 0 20px;
+    margin:
+        14px 0 20px;
 
-    color:var(--muted);
+    position:relative;
+    z-index:2;
+
+    color:#46536a;
 
     font-size:11px;
-    line-height:1.6;
+
+    line-height:1.55;
 }
 
 .coreFooter{
@@ -1038,204 +1434,191 @@ body::before{
     align-items:center;
     justify-content:space-between;
 
-    gap:12px;
+    gap:10px;
 
-    border-top:1px solid #202a38;
+    position:relative;
+    z-index:2;
+
+    border-top:
+        2px solid rgba(8,16,31,.13);
 }
 
 .coreFooter span{
-    color:#58677a;
+    color:#637088;
 
     font-size:8px;
 }
 
 .corePlay{
-    border:0;
+    padding:7px 9px;
 
-    background:transparent;
+    border:
+        2px solid var(--outline);
 
-    color:#dce4ef;
+    background:var(--blue);
+
+    color:white;
+
+    box-shadow:
+        2px 2px 0 var(--outline);
 
     font-family:inherit;
-    font-size:8px;
-    font-weight:900;
 
-    letter-spacing:.9px;
+    font-size:8px;
+    font-weight:1000;
 
     cursor:pointer;
 }
 
-.corePlay:hover{
-    color:var(--red);
-}
-
 
 /* =========================================================
-   WEEKLY GAME LIST
+   WEEKLY GAMES
    ========================================================= */
 
 .gameList{
     display:flex;
     flex-direction:column;
 
-    gap:9px;
+    gap:13px;
 }
 
 .gameRow{
-    min-height:91px;
+    min-height:96px;
 
-    padding:15px 17px;
+    padding:15px 18px;
 
     display:grid;
-    grid-template-columns:65px 1fr 155px 105px;
 
-    gap:17px;
+    grid-template-columns:
+        68px 1fr 180px 110px;
+
+    gap:18px;
 
     align-items:center;
 
-    background:#111722;
+    position:relative;
 
-    border:1px solid var(--line);
-    border-radius:6px;
+    border:
+        3px solid var(--outline);
 
-    transition:.2s;
-}
+    background:#102b5c;
 
-.gameRow.available:hover{
-    border-color:#5d3540;
+    box-shadow:
+        5px 5px 0 var(--outline);
 
-    transform:translateX(3px);
-}
-
-.gameRow.locked{
-    background:#0e131b;
-
-    opacity:.68;
-}
-
-.gameNumber{
-    height:57px;
-
-    display:grid;
-    place-items:center;
-
-    border-right:1px solid var(--line);
-
-    color:#647387;
-
-    font-family:Consolas,monospace;
-    font-size:16px;
-    font-weight:900;
-}
-
-.gameRow.available .gameNumber{
-    color:var(--red);
-}
-
-.gameInfo h3{
-    margin:0 0 5px;
-
-    font-size:13px;
-}
-
-.gameInfo p{
-    margin:0;
-
-    color:#78869a;
-
-    font-size:10px;
-}
-
-.gameConcept{
-    color:#657488;
-
-    font-size:9px;
-    line-height:1.45;
-}
-
-.gameStatus{
-    justify-self:end;
-
-    padding:6px 8px;
-
-    border-radius:4px;
-
-    font-size:7px;
-    font-weight:900;
-
-    letter-spacing:1px;
-
-    text-align:center;
-}
-
-.gameStatus.available{
-    background:var(--red-soft);
-
-    border:1px solid rgba(229,72,77,.25);
-
-    color:#ef777b;
-}
-
-.gameStatus.locked{
-    background:rgba(255,255,255,.025);
-
-    border:1px solid var(--line);
-
-    color:#637084;
-}
-
-.gameStatus.cleared{
-    background:var(--green-soft);
-
-    border:1px solid rgba(85,185,138,.25);
-
-    color:var(--green);
-}
-
-.gameStatus.upcoming{
-    background:var(--yellow-soft);
-
-    border:1px solid rgba(230,189,74,.22);
-
-    color:var(--yellow);
+    transition:.16s;
 }
 
 .gameRow.available{
     cursor:pointer;
 }
 
+.gameRow.available:hover{
+    transform:
+        translate(-2px,-2px);
 
-/* =========================================================
-   PT AREA
-   ========================================================= */
+    box-shadow:
+        8px 8px 0 var(--outline);
 
-.ptRow{
-    border-left:3px solid var(--yellow);
+    background:#153a7b;
 }
 
+.gameRow.locked{
+    opacity:.56;
+}
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
+.gameRow.cleared{
+    background:#123f54;
+}
 
-.footer{
-    margin-top:60px;
+.gameNumber{
+    height:58px;
 
-    padding:25px 0 5px;
+    display:grid;
+    place-items:center;
 
-    display:flex;
-    justify-content:space-between;
+    transform:rotate(-2deg);
 
-    gap:20px;
+    border:
+        3px solid var(--outline);
 
-    border-top:1px solid #202936;
+    background:var(--yellow);
 
-    color:#4e5c6e;
+    color:var(--ink);
 
-    font-size:8px;
-    font-weight:800;
+    box-shadow:
+        3px 3px 0 var(--red);
 
-    letter-spacing:.6px;
+    font-family:
+        Impact,
+        Arial Black,
+        sans-serif;
+
+    font-size:18px;
+}
+
+.gameRow.locked .gameNumber{
+    background:#62728b;
+
+    box-shadow:
+        3px 3px 0 #202c40;
+}
+
+.gameInfo h3{
+    margin:0 0 5px;
+
+    font-size:14px;
+}
+
+.gameInfo p{
+    margin:0;
+
+    color:#a9c5ee;
+
+    font-size:10px;
+}
+
+.gameConcept{
+    color:#9db3d4;
+
+    font-size:9px;
+
+    line-height:1.5;
+}
+
+.gameStatus{
+    justify-self:end;
+
+    padding:7px 8px;
+
+    border:
+        2px solid var(--outline);
+
+    box-shadow:
+        2px 2px 0 var(--outline);
+
+    font-size:7px;
+    font-weight:1000;
+
+    letter-spacing:.7px;
+}
+
+.gameStatus.available{
+    background:var(--yellow);
+
+    color:var(--ink);
+}
+
+.gameStatus.locked{
+    background:#68758a;
+
+    color:white;
+}
+
+.gameStatus.cleared{
+    background:var(--green);
+
+    color:var(--ink);
 }
 
 
@@ -1243,11 +1626,11 @@ body::before{
    MODAL
    ========================================================= */
 
-#modalOverlay{
+.overlay{
     position:fixed;
     inset:0;
 
-    z-index:100;
+    z-index:200;
 
     display:none;
     align-items:center;
@@ -1255,190 +1638,127 @@ body::before{
 
     padding:20px;
 
-    background:rgba(0,0,0,.78);
+    background:
+        rgba(3,9,22,.84);
 
-    backdrop-filter:blur(5px);
+    backdrop-filter:
+        blur(5px);
 }
 
 .modal{
-    width:min(560px,100%);
+    width:min(650px,100%);
 
-    background:
-        linear-gradient(
-            145deg,
-            #151c28,
-            #0e131b
-        );
+    max-height:91vh;
 
-    border:1px solid #344155;
-    border-radius:8px;
+    overflow:auto;
+
+    border:
+        4px solid var(--outline);
+
+    background:var(--cream);
+
+    color:var(--ink);
 
     box-shadow:
-        0 30px 90px rgba(0,0,0,.65);
-
-    overflow:hidden;
-
-    animation:modalIn .2s ease;
-}
-
-@keyframes modalIn{
-    from{
-        opacity:0;
-        transform:translateY(12px) scale(.98);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
+        12px 12px 0 var(--red);
 }
 
 .modalHeader{
-    min-height:54px;
+    min-height:57px;
 
-    padding:0 15px 0 20px;
+    padding:
+        0 14px 0 19px;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
 
-    border-bottom:1px solid var(--line);
+    border-bottom:
+        4px solid var(--outline);
+
+    background:var(--blue);
+
+    color:white;
 }
 
 .modalHeader span{
-    color:#758397;
+    font-size:9px;
+    font-weight:1000;
 
-    font-size:8px;
-    font-weight:900;
-
-    letter-spacing:1.5px;
+    letter-spacing:1.2px;
 }
 
-.closeModal{
-    width:33px;
-    height:33px;
+.closeButton{
+    width:34px;
+    height:34px;
 
     display:grid;
     place-items:center;
 
-    padding:0;
+    border:
+        3px solid var(--outline);
 
-    border:1px solid var(--line);
-    border-radius:4px;
+    background:var(--yellow);
 
-    background:transparent;
+    color:var(--ink);
 
-    color:#8d9aac;
+    box-shadow:
+        2px 2px 0 var(--outline);
 
     font-size:21px;
-    line-height:1;
+    font-weight:1000;
 
     cursor:pointer;
 }
 
-.closeModal:hover{
-    border-color:var(--red);
-    color:var(--red);
-}
-
 .modalBody{
-    padding:28px 25px;
+    padding:28px;
 }
 
 .modalSuit{
-    margin-bottom:15px;
-
     color:var(--red);
 
-    font-size:39px;
-    line-height:1;
+    font-size:43px;
 }
 
 .modalLabel{
-    margin-bottom:7px;
+    width:max-content;
 
-    color:var(--red);
+    margin-top:11px;
+
+    padding:4px 7px;
+
+    border:
+        2px solid var(--outline);
+
+    background:var(--yellow);
 
     font-size:8px;
-    font-weight:900;
-
-    letter-spacing:1.5px;
+    font-weight:1000;
 }
 
 .modalBody h2{
-    margin:0;
+    margin:
+        9px 0 4px;
 
-    font-size:24px;
+    font-size:27px;
 }
 
 .modalSub{
-    margin-top:6px;
-
-    color:#8794a6;
+    color:#56647b;
 
     font-size:11px;
-    font-weight:700;
+    font-weight:900;
 }
 
 .modalDescription{
-    margin:20px 0 0;
+    margin-top:18px;
 
-    color:#9ba7b7;
+    color:#46536a;
 
     font-size:12px;
-    line-height:1.7;
-}
 
-.modalInfo{
-    margin-top:21px;
-
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-
-    gap:8px;
-}
-
-.modalInfoBox{
-    padding:10px;
-
-    background:#0b1017;
-
-    border:1px solid var(--line);
-    border-radius:4px;
-}
-
-.modalInfoBox small{
-    display:block;
-
-    margin-bottom:5px;
-
-    color:#566477;
-
-    font-size:7px;
-    font-weight:900;
-
-    letter-spacing:1px;
-}
-
-.modalInfoBox strong{
-    color:#dce3ed;
-
-    font-size:9px;
-}
-
-.practiceNotice{
-    margin-top:20px;
-
-    padding:12px 13px;
-
-    border-left:2px solid var(--yellow);
-
-    background:rgba(230,189,74,.06);
-
-    color:#a69a6e;
-
-    font-size:10px;
-    line-height:1.55;
+    line-height:1.65;
 }
 
 .modalFooter{
@@ -1447,37 +1767,39 @@ body::before{
     display:flex;
     justify-content:flex-end;
 
-    gap:8px;
+    gap:9px;
 
-    border-top:1px solid var(--line);
+    border-top:
+        3px solid var(--outline);
+
+    background:#e8f1ff;
 }
 
-.modalCancel,
-.modalContinue{
+.secondaryButton,
+.primaryButton{
     padding:10px 14px;
 
-    border-radius:4px;
+    border:
+        3px solid var(--outline);
+
+    box-shadow:
+        3px 3px 0 var(--outline);
 
     font-family:inherit;
-    font-size:8px;
-    font-weight:900;
 
-    letter-spacing:1px;
+    font-size:8px;
+    font-weight:1000;
 
     cursor:pointer;
 }
 
-.modalCancel{
-    border:1px solid var(--line);
+.secondaryButton{
+    background:white;
 
-    background:transparent;
-
-    color:#7f8da0;
+    color:var(--ink);
 }
 
-.modalContinue{
-    border:1px solid var(--red);
-
+.primaryButton{
     background:var(--red);
 
     color:white;
@@ -1485,48 +1807,610 @@ body::before{
 
 
 /* =========================================================
-   TOAST
+   QUIZ
    ========================================================= */
 
-#toast{
-    position:fixed;
+.quizTop{
+    margin-bottom:22px;
 
-    left:50%;
-    bottom:25px;
+    display:flex;
+    justify-content:space-between;
 
-    z-index:200;
-
-    min-width:260px;
-
-    padding:11px 15px;
-
-    transform:translate(-50%,25px);
-
-    border:1px solid #354155;
-    border-radius:5px;
-
-    background:#151c27;
-
-    color:#dce3ed;
-
-    font-size:9px;
-    font-weight:800;
-
-    text-align:center;
-
-    opacity:0;
-    pointer-events:none;
-
-    box-shadow:
-        0 15px 45px rgba(0,0,0,.4);
-
-    transition:.25s;
+    gap:15px;
 }
 
-#toast.show{
+.quizCounter{
+    padding:5px 8px;
+
+    border:
+        2px solid var(--outline);
+
+    background:var(--yellow);
+
+    box-shadow:
+        2px 2px 0 var(--outline);
+
+    font-size:8px;
+    font-weight:1000;
+}
+
+.quizScore{
+    padding:5px 8px;
+
+    border:
+        2px solid var(--outline);
+
+    background:var(--blue);
+
+    color:white;
+
+    box-shadow:
+        2px 2px 0 var(--outline);
+
+    font-size:8px;
+    font-weight:1000;
+}
+
+.progressTrack{
+    height:10px;
+
+    margin-bottom:25px;
+
+    overflow:hidden;
+
+    border:
+        2px solid var(--outline);
+
+    background:white;
+}
+
+.progressFill{
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--yellow),
+            var(--red)
+        );
+
+    transition:.3s;
+}
+
+.questionType{
+    width:max-content;
+
+    margin-bottom:10px;
+
+    padding:5px 7px;
+
+    transform:rotate(-1deg);
+
+    background:var(--red);
+
+    color:white;
+
+    border:
+        2px solid var(--outline);
+
+    box-shadow:
+        2px 2px 0 var(--outline);
+
+    font-size:8px;
+    font-weight:1000;
+}
+
+.questionText{
+    margin:
+        0 0 21px;
+
+    font-size:20px;
+
+    line-height:1.4;
+}
+
+.codeBlock{
+    margin:
+        0 0 20px;
+
+    padding:16px;
+
+    overflow:auto;
+
+    border:
+        3px solid var(--outline);
+
+    background:#08152e;
+
+    color:#f9e990;
+
+    box-shadow:
+        4px 4px 0 var(--blue);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:11px;
+
+    line-height:1.6;
+
+    white-space:pre-wrap;
+}
+
+.answers{
+    display:grid;
+    gap:9px;
+}
+
+.answerButton{
+    width:100%;
+
+    padding:12px 13px;
+
+    display:flex;
+    align-items:center;
+
+    gap:11px;
+
+    border:
+        3px solid var(--outline);
+
+    background:white;
+
+    color:var(--ink);
+
+    box-shadow:
+        3px 3px 0 var(--outline);
+
+    font-family:inherit;
+
+    font-size:11px;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:.13s;
+}
+
+.answerButton:hover{
+    transform:
+        translate(-2px,-2px);
+
+    box-shadow:
+        5px 5px 0 var(--outline);
+
+    background:#eef6ff;
+}
+
+.answerLetter{
+    width:27px;
+    height:27px;
+
+    flex:0 0 27px;
+
+    display:grid;
+    place-items:center;
+
+    border:
+        2px solid var(--outline);
+
+    background:var(--yellow);
+
+    color:var(--ink);
+
+    font-size:9px;
+    font-weight:1000;
+}
+
+.answerButton.correct{
+    background:#bff4d6;
+}
+
+.answerButton.wrong{
+    background:#ffd1d5;
+}
+
+.feedback{
+    display:none;
+
+    margin-top:19px;
+
+    padding:14px;
+
+    position:relative;
+
+    border:
+        3px solid var(--outline);
+
+    background:#fff2b8;
+
+    box-shadow:
+        4px 4px 0 var(--outline);
+
+    color:#303a4d;
+
+    font-size:11px;
+
+    line-height:1.55;
+}
+
+.feedback.correct{
+    background:#c9f6dd;
+}
+
+.feedback.wrong{
+    background:#ffe2b6;
+}
+
+.nextButton{
+    display:none;
+
+    width:100%;
+
+    margin-top:16px;
+
+    padding:12px;
+
+    border:
+        3px solid var(--outline);
+
+    background:var(--red);
+
+    color:white;
+
+    box-shadow:
+        4px 4px 0 var(--outline);
+
+    font-family:inherit;
+
+    font-size:9px;
+    font-weight:1000;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   RESULT
+   ========================================================= */
+
+.result{
+    padding:12px 0;
+
+    text-align:center;
+}
+
+.resultSymbol{
+    color:var(--red);
+
+    font-size:66px;
+
+    line-height:1;
+}
+
+.resultLabel{
+    width:max-content;
+
+    margin:
+        15px auto 0;
+
+    padding:6px 10px;
+
+    transform:rotate(-2deg);
+
+    border:
+        3px solid var(--outline);
+
+    background:var(--yellow);
+
+    box-shadow:
+        3px 3px 0 var(--red);
+
+    font-size:10px;
+    font-weight:1000;
+
+    letter-spacing:1px;
+}
+
+.result h2{
+    margin:
+        13px 0 5px;
+
+    font-size:30px;
+}
+
+.resultScore{
+    margin:22px 0;
+
+    color:var(--blue);
+
+    font-family:
+        Impact,
+        Arial Black,
+        sans-serif;
+
+    font-size:57px;
+}
+
+.resultScore span{
+    color:var(--red);
+}
+
+.resultText{
+    max-width:450px;
+
+    margin:auto;
+
+    color:#536078;
+
+    font-size:12px;
+
+    line-height:1.65;
+}
+
+.unlockBox{
+    margin-top:23px;
+
+    padding:14px;
+
+    border:
+        3px solid var(--outline);
+
+    background:var(--yellow);
+
+    box-shadow:
+        4px 4px 0 var(--red);
+
+    color:var(--ink);
+
+    font-size:10px;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   COMIC REMINDER SPEECH BUBBLE
+   ========================================================= */
+
+#arenaBubble{
+    width:
+        min(355px,calc(100% - 34px));
+
+    position:fixed;
+
+    right:30px;
+    bottom:32px;
+
+    z-index:400;
+
+    padding:
+        18px 47px 18px 19px;
+
+    border:
+        4px solid var(--outline);
+
+    border-radius:
+        22px 22px 5px 22px;
+
+    background:var(--cream);
+
+    color:var(--ink);
+
+    box-shadow:
+        7px 7px 0 var(--red);
+
+    opacity:0;
+
+    transform:
+        translateY(35px)
+        rotate(2deg)
+        scale(.92);
+
+    pointer-events:none;
+
+    transition:
+        .28s cubic-bezier(.2,.8,.2,1.2);
+}
+
+
+/* speech bubble tail */
+
+#arenaBubble::after{
+    content:"";
+
+    position:absolute;
+
+    right:20px;
+    bottom:-21px;
+
+    width:24px;
+    height:24px;
+
+    background:var(--cream);
+
+    border-right:
+        4px solid var(--outline);
+
+    border-bottom:
+        4px solid var(--outline);
+
+    transform:
+        skewY(35deg)
+        rotate(20deg);
+}
+
+#arenaBubble.show{
     opacity:1;
 
-    transform:translate(-50%,0);
+    transform:
+        translateY(0)
+        rotate(-1deg)
+        scale(1);
+
+    pointer-events:auto;
+}
+
+.bubbleLabel{
+    width:max-content;
+
+    padding:4px 7px;
+
+    transform:rotate(-2deg);
+
+    border:
+        2px solid var(--outline);
+
+    background:var(--yellow);
+
+    box-shadow:
+        2px 2px 0 var(--red);
+
+    color:var(--ink);
+
+    font-size:7px;
+    font-weight:1000;
+
+    letter-spacing:1px;
+}
+
+.bubbleTitle{
+    margin-top:9px;
+
+    color:var(--blue);
+
+    font-family:
+        Impact,
+        Arial Black,
+        sans-serif;
+
+    font-size:21px;
+
+    letter-spacing:.5px;
+}
+
+.bubbleText{
+    margin-top:5px;
+
+    color:#4d5b72;
+
+    font-size:10px;
+
+    line-height:1.5;
+}
+
+.bubbleClose{
+    width:27px;
+    height:27px;
+
+    position:absolute;
+
+    top:10px;
+    right:10px;
+
+    display:grid;
+    place-items:center;
+
+    padding:0;
+
+    border:
+        2px solid var(--outline);
+
+    border-radius:50%;
+
+    background:var(--red);
+
+    color:white;
+
+    font-weight:1000;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   COMIC DECORATIONS
+   ========================================================= */
+
+.comicPop{
+    position:fixed;
+
+    z-index:0;
+
+    pointer-events:none;
+
+    user-select:none;
+
+    font-family:
+        Impact,
+        Arial Black,
+        sans-serif;
+
+    opacity:.14;
+}
+
+.popCode{
+    left:1%;
+    top:34%;
+
+    color:var(--yellow);
+
+    font-size:47px;
+
+    transform:rotate(-13deg);
+}
+
+.popGo{
+    right:1%;
+    top:54%;
+
+    color:var(--red);
+
+    font-size:55px;
+
+    transform:rotate(12deg);
+}
+
+.popCircuit{
+    left:2%;
+    bottom:8%;
+
+    color:#5db4ff;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:23px;
+
+    transform:rotate(-5deg);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer{
+    margin-top:65px;
+
+    padding:25px 0 5px;
+
+    display:flex;
+    justify-content:space-between;
+
+    gap:20px;
+
+    border-top:
+        2px solid rgba(255,255,255,.15);
+
+    color:#7891b9;
+
+    font-size:8px;
+    font-weight:900;
 }
 
 
@@ -1538,7 +2422,8 @@ body::before{
 
     .entryWrap{
         grid-template-columns:1fr;
-        gap:40px;
+
+        gap:50px;
     }
 
     .hero{
@@ -1546,24 +2431,29 @@ body::before{
     }
 
     .heroLabel{
-        justify-content:center;
+        margin-left:auto;
+        margin-right:auto;
     }
 
     .heroText{
         margin-left:auto;
         margin-right:auto;
+
+        border-left:0;
     }
 
     .heroMeta{
         justify-content:center;
     }
 
-    .currentGame{
-        grid-template-columns:1fr;
+    .registration{
+        max-width:520px;
+
+        margin:auto;
     }
 
-    .currentAction{
-        max-width:380px;
+    .currentGame{
+        grid-template-columns:1fr;
     }
 
     .coreGrid{
@@ -1571,10 +2461,15 @@ body::before{
     }
 
     .gameRow{
-        grid-template-columns:55px 1fr 95px;
+        grid-template-columns:
+            60px 1fr 110px;
     }
 
     .gameConcept{
+        display:none;
+    }
+
+    .comicPop{
         display:none;
     }
 
@@ -1584,32 +2479,44 @@ body::before{
 @media(max-width:600px){
 
     .topbar{
-        padding:0 15px;
+        padding:0 14px;
     }
 
     .brandSub{
         display:none;
     }
 
+    .brandName{
+        font-size:12px;
+    }
+
+    .gradeTag{
+        font-size:8px;
+    }
+
     #entryScreen{
-        padding-top:45px;
+        padding-top:55px;
     }
 
     .hero h1{
-        font-size:48px;
-        letter-spacing:-2px;
+        font-size:52px;
+    }
+
+    .registration::after{
+        right:-5px;
     }
 
     .currentGame{
-        padding:22px;
+        padding:24px;
     }
 
-    .currentGame h2{
-        font-size:24px;
+    .currentGame::after{
+        display:none;
     }
 
     .gameRow{
-        grid-template-columns:45px 1fr;
+        grid-template-columns:
+            48px 1fr;
     }
 
     .gameStatus{
@@ -1618,16 +2525,18 @@ body::before{
         justify-self:start;
     }
 
-    .modalInfo{
-        grid-template-columns:1fr;
+    .sectionHeader{
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    #arenaBubble{
+        right:17px;
+        bottom:24px;
     }
 
     .footer{
-        flex-direction:column;
-    }
-
-    .sectionHeader{
-        align-items:flex-start;
         flex-direction:column;
     }
 
@@ -1636,13 +2545,36 @@ body::before{
 </style>
 </head>
 
-
 <body>
 
 
-<!-- ======================================================
+<!-- COMIC BACKGROUND DETAILS -->
+
+<div
+    class="comicPop popCode"
+    aria-hidden="true"
+>
+    CODE!
+</div>
+
+<div
+    class="comicPop popGo"
+    aria-hidden="true"
+>
+    GO!
+</div>
+
+<div
+    class="comicPop popCircuit"
+    aria-hidden="true"
+>
+    ●──●──●
+</div>
+
+
+<!-- =====================================================
      HEADER
-     ====================================================== -->
+     ===================================================== -->
 
 <header class="topbar">
 
@@ -1653,13 +2585,15 @@ body::before{
         </div>
 
         <div>
+
             <div class="brandName">
                 ROBOTICS CODE ARENA
             </div>
 
             <div class="brandSub">
-                INTERACTIVE PRACTICE PLATFORM
+                GRADE 8 PRACTICE SYSTEM
             </div>
+
         </div>
 
     </div>
@@ -1671,79 +2605,70 @@ body::before{
 </header>
 
 
-<!-- ======================================================
-     ARENA NOTICE
-     ====================================================== -->
-
 <div class="noticeBar">
 
     <span class="noticePrefix">
-        ARENA NOTICE //
+        ARENA NEWS!
     </span>
 
     <span id="noticeText">
-        Practice mode only. Take your time and read each question carefully.
+        Practice mode only — mistakes are part of learning!
     </span>
 
 </div>
 
 
-<!-- ======================================================
+<!-- =====================================================
      ENTRY SCREEN
-     ====================================================== -->
+     ===================================================== -->
 
 <section id="entryScreen">
 
     <div class="entryWrap">
 
 
-        <!-- HERO -->
-
         <div class="hero">
 
             <div class="heroLabel">
-                GRADE 8 ROBOTICS
+                ★ GRADE 8 ROBOTICS ★
             </div>
 
             <h1>
-                ENTER THE<br>
-                <span>CODE ARENA.</span>
+                ROBOTICS<br>
+                <span>CODE ARENA!</span>
             </h1>
 
             <p class="heroText">
-                Review your lessons, test your coding logic,
-                analyze circuits, and clear weekly Robotics
-                challenges. This arena is designed for practice,
-                not pressure.
+                Enter a world of coding, circuits, sensors,
+                and Robotics challenges. Practice what you
+                learned, clear weekly games, and prepare
+                yourself for the next mission!
             </p>
+
 
             <div class="heroMeta">
 
-                <span>CODE READING</span>
-
+                <span>ARDUINO</span>
+                <span>CODING</span>
                 <span>CIRCUITS</span>
-
                 <span>SENSORS</span>
-
-                <span>ROBOTICS CONCEPTS</span>
+                <span>LOGIC</span>
 
             </div>
 
         </div>
 
 
-        <!-- REGISTRATION -->
-
         <div class="registration">
 
             <div class="registrationTop">
 
                 <small>
-                    ARENA ACCESS
+                    PLAYER ACCESS
                 </small>
 
                 <h2>
-                    Identify Your Player
+                    Enter the Arena
                 </h2>
 
             </div>
@@ -1751,7 +2676,7 @@ body::before{
 
             <div class="field">
 
-                <label for="studentName">
+                <label>
                     STUDENT NAME
                 </label>
 
@@ -1767,7 +2692,7 @@ body::before{
 
             <div class="field">
 
-                <label for="studentSection">
+                <label>
                     SECTION
                 </label>
 
@@ -1783,9 +2708,13 @@ body::before{
 
             <div class="fixedGrade">
 
-                <span>GRADE LEVEL</span>
+                <span>
+                    GRADE LEVEL
+                </span>
 
-                <span>GRADE 8</span>
+                <span>
+                    GRADE 8
+                </span>
 
             </div>
 
@@ -1794,13 +2723,12 @@ body::before{
                 class="enterButton"
                 onclick="enterArena()"
             >
-                ENTER THE ARENA
+                LET'S GO! →
             </button>
 
 
             <div class="entryReminder">
-                No grades. No penalties. Use the arena to
-                review what you learned in class.
+                Practice only • Not graded • Unlimited attempts
             </div>
 
         </div>
@@ -1810,14 +2738,12 @@ body::before{
 </section>
 
 
-<!-- ======================================================
+<!-- =====================================================
      DASHBOARD
-     ====================================================== -->
+     ===================================================== -->
 
 <main id="dashboard">
 
-
-    <!-- PLAYER BAR -->
 
     <section class="playerBar">
 
@@ -1856,35 +2782,31 @@ body::before{
     </section>
 
 
-    <!-- DASHBOARD HEADING -->
-
     <section class="dashboardHeading">
 
         <small>
-            ARENA LOBBY
+            ★ ARENA LOBBY ★
         </small>
 
         <h1 id="welcomeHeading">
-            Welcome to the Arena
+            Ready for a challenge?
         </h1>
 
         <p>
-            Choose a practice category or enter the current weekly game.
+            Pick a practice category or enter your current weekly game.
         </p>
 
     </section>
 
 
-    <!-- ==================================================
-         CURRENT WEEKLY GAME
-         ================================================== -->
+    <!-- CURRENT GAME -->
 
     <section class="currentGame">
 
         <div>
 
             <div class="currentEyebrow">
-                CURRENT GAME // WEEK 01
+                GAME #01 • NOW AVAILABLE!
             </div>
 
             <h2>
@@ -1896,9 +2818,9 @@ body::before{
             </div>
 
             <p class="description">
-                Review temperature, humidity, air quality,
-                sensor readings, Serial Monitor output,
-                and simple Arduino decision-making.
+                Practice temperature, humidity, air quality,
+                sensor readings, Serial Monitor, and simple
+                Arduino decision-making.
             </p>
 
 
@@ -1911,7 +2833,7 @@ body::before{
                     </small>
 
                     <strong class="difficulty">
-                        ● ○ ○
+                        ★ EASY
                     </strong>
 
                 </div>
@@ -1933,7 +2855,7 @@ body::before{
                 <div class="stat">
 
                     <small>
-                        TARGET
+                        GAME CLEAR
                     </small>
 
                     <strong>
@@ -1954,7 +2876,7 @@ body::before{
             </div>
 
             <small>
-                GAME 01
+                WEEK 01
             </small>
 
             <strong>
@@ -1963,9 +2885,9 @@ body::before{
 
             <button
                 class="playCurrent"
-                onclick="openWeeklyGame(1)"
+                onclick="startWeeklyGame(1)"
             >
-                ENTER GAME
+                PLAY NOW! →
             </button>
 
         </div>
@@ -1973,9 +2895,9 @@ body::before{
     </section>
 
 
-    <!-- ==================================================
+    <!-- =================================================
          CORE ARENA
-         ================================================== -->
+         ================================================= -->
 
     <section class="arenaSection">
 
@@ -1984,7 +2906,7 @@ body::before{
             <div class="sectionTitle">
 
                 <small>
-                    PRACTICE ANYTIME
+                    ALWAYS OPEN!
                 </small>
 
                 <h2>
@@ -1992,13 +2914,13 @@ body::before{
                 </h2>
 
                 <p>
-                    These practice categories are always available.
+                    Quick practice challenges you can play anytime.
                 </p>
 
             </div>
 
             <div class="sectionRight">
-                3 OPEN CATEGORIES
+                3 PRACTICE MODES
             </div>
 
         </div>
@@ -2018,11 +2940,10 @@ body::before{
                     </div>
 
                     <div class="openBadge">
-                        OPEN
+                        PLAY!
                     </div>
 
                 </div>
-
 
                 <h3>
                     Code Quest
@@ -2032,26 +2953,23 @@ body::before{
                     ARDUINO PROGRAMMING
                 </div>
 
-
                 <p class="coreDescription">
-                    Practice Arduino commands, variables,
-                    setup and loop, input and output,
-                    if/else statements, code reading,
-                    and simple debugging.
+                    Read Arduino code, identify commands,
+                    understand simple conditions, predict
+                    outputs, and practice basic debugging.
                 </p>
-
 
                 <div class="coreFooter">
 
                     <span>
-                        Unlimited practice
+                        5 random questions
                     </span>
 
                     <button
                         class="corePlay"
-                        onclick="openCoreGame('code')"
+                        onclick="startCoreGame('code')"
                     >
-                        ENTER →
+                        START →
                     </button>
 
                 </div>
@@ -2070,11 +2988,10 @@ body::before{
                     </div>
 
                     <div class="openBadge">
-                        OPEN
+                        PLAY!
                     </div>
 
                 </div>
-
 
                 <h3>
                     Circuit Quest
@@ -2084,26 +3001,23 @@ body::before{
                     CIRCUITS & COMPONENTS
                 </div>
 
-
                 <p class="coreDescription">
-                    Review Arduino pins, sensors,
-                    LEDs, buzzers, breadboards,
-                    input and output devices,
-                    and basic circuit connections.
+                    Review sensors, LEDs, Arduino pins,
+                    input and output devices, and common
+                    Robotics components.
                 </p>
-
 
                 <div class="coreFooter">
 
                     <span>
-                        Unlimited practice
+                        5 random questions
                     </span>
 
                     <button
                         class="corePlay"
-                        onclick="openCoreGame('circuit')"
+                        onclick="startCoreGame('circuit')"
                     >
-                        ENTER →
+                        START →
                     </button>
 
                 </div>
@@ -2122,11 +3036,10 @@ body::before{
                     </div>
 
                     <div class="openBadge">
-                        OPEN
+                        PLAY!
                     </div>
 
                 </div>
-
 
                 <h3>
                     Robo Recall
@@ -2136,26 +3049,23 @@ body::before{
                     CONCEPTS & TERMINOLOGY
                 </div>
 
-
                 <p class="coreDescription">
-                    Review important Robotics terms,
-                    sensor functions, component purposes,
-                    programming concepts, and ideas
-                    discussed during class.
+                    Test your memory of sensors,
+                    system concepts, input-process-output,
+                    and important Grade 8 Robotics terms.
                 </p>
-
 
                 <div class="coreFooter">
 
                     <span>
-                        Unlimited practice
+                        5 random questions
                     </span>
 
                     <button
                         class="corePlay"
-                        onclick="openCoreGame('recall')"
+                        onclick="startCoreGame('recall')"
                     >
-                        ENTER →
+                        START →
                     </button>
 
                 </div>
@@ -2167,9 +3077,9 @@ body::before{
     </section>
 
 
-    <!-- ==================================================
+    <!-- =================================================
          WEEKLY GAMES
-         ================================================== -->
+         ================================================= -->
 
     <section class="arenaSection">
 
@@ -2178,7 +3088,7 @@ body::before{
             <div class="sectionTitle">
 
                 <small>
-                    QUARTER MISSION MAP
+                    GAME SELECT
                 </small>
 
                 <h2>
@@ -2186,7 +3096,7 @@ body::before{
                 </h2>
 
                 <p>
-                    New games become available as classroom lessons are completed.
+                    Clear each weekly challenge to unlock the next game.
                 </p>
 
             </div>
@@ -2198,289 +3108,23 @@ body::before{
         </div>
 
 
-        <div class="gameList">
-
-
-            <!-- GAME 1 -->
-
-            <article
-                class="gameRow available"
-                id="gameRow1"
-                onclick="openWeeklyGame(1)"
-            >
-
-                <div class="gameNumber">
-                    01
-                </div>
-
-                <div class="gameInfo">
-
-                    <h3>
-                        Environmental Monitoring System
-                    </h3>
-
-                    <p>
-                        DHT11 + MQ135
-                    </p>
-
-                </div>
-
-                <div class="gameConcept">
-                    Temperature • Humidity • Air Quality • Sensor Readings
-                </div>
-
-                <div
-                    class="gameStatus available"
-                    id="gameStatus1"
-                >
-                    AVAILABLE
-                </div>
-
-            </article>
-
-
-            <!-- GAME 2 -->
-
-            <article
-                class="gameRow locked"
-                id="gameRow2"
-                onclick="lockedGame(2)"
-            >
-
-                <div class="gameNumber">
-                    02
-                </div>
-
-                <div class="gameInfo">
-
-                    <h3>
-                        Smart Motion Alarm System
-                    </h3>
-
-                    <p>
-                        PIR + Buzzer + LED
-                    </p>
-
-                </div>
-
-                <div class="gameConcept">
-                    Motion Detection • Digital Input • Alarm Output
-                </div>
-
-                <div
-                    class="gameStatus locked"
-                    id="gameStatus2"
-                >
-                    LOCKED
-                </div>
-
-            </article>
-
-
-            <!-- GAME 3 -->
-
-            <article
-                class="gameRow locked"
-                id="gameRow3"
-                onclick="lockedGame(3)"
-            >
-
-                <div class="gameNumber">
-                    03
-                </div>
-
-                <div class="gameInfo">
-
-                    <h3>
-                        Password Door Lock System
-                    </h3>
-
-                    <p>
-                        Keypad + LCD + Stepper Motor
-                    </p>
-
-                </div>
-
-                <div class="gameConcept">
-                    User Input • Password Checking • Motor Control
-                </div>
-
-                <div
-                    class="gameStatus locked"
-                    id="gameStatus3"
-                >
-                    LOCKED
-                </div>
-
-            </article>
-
-
-            <!-- GAME 4 -->
-
-            <article
-                class="gameRow locked"
-                id="gameRow4"
-                onclick="lockedGame(4)"
-            >
-
-                <div class="gameNumber">
-                    04
-                </div>
-
-                <div class="gameInfo">
-
-                    <h3>
-                        RFID Access Control System
-                    </h3>
-
-                    <p>
-                        RFID + Stepper Motor + LEDs
-                    </p>
-
-                </div>
-
-                <div class="gameConcept">
-                    UID • Authentication • Access Control
-                </div>
-
-                <div
-                    class="gameStatus locked"
-                    id="gameStatus4"
-                >
-                    LOCKED
-                </div>
-
-            </article>
-
-
-            <!-- GAME 5 -->
-
-            <article
-                class="gameRow locked"
-                id="gameRow5"
-                onclick="lockedGame(5)"
-            >
-
-                <div class="gameNumber">
-                    05
-                </div>
-
-                <div class="gameInfo">
-
-                    <h3>
-                        System Integration Challenge
-                    </h3>
-
-                    <p>
-                        Selected Components
-                    </p>
-
-                </div>
-
-                <div class="gameConcept">
-                    Sensors • Input • Processing • Output
-                </div>
-
-                <div
-                    class="gameStatus locked"
-                    id="gameStatus5"
-                >
-                    LOCKED
-                </div>
-
-            </article>
-
-
-            <!-- GAME 6 -->
-
-            <article
-                class="gameRow locked ptRow"
-                id="gameRow6"
-                onclick="lockedGame(6)"
-            >
-
-                <div class="gameNumber">
-                    06
-                </div>
-
-                <div class="gameInfo">
-
-                    <h3>
-                        Performance Task Development
-                    </h3>
-
-                    <p>
-                        Multiple Components
-                    </p>
-
-                </div>
-
-                <div class="gameConcept">
-                    Design • Build • Program • Test
-                </div>
-
-                <div
-                    class="gameStatus locked"
-                    id="gameStatus6"
-                >
-                    LOCKED
-                </div>
-
-            </article>
-
-
-            <!-- GAME 7 -->
-
-            <article
-                class="gameRow locked ptRow"
-                id="gameRow7"
-                onclick="lockedGame(7)"
-            >
-
-                <div class="gameNumber">
-                    07
-                </div>
-
-                <div class="gameInfo">
-
-                    <h3>
-                        Final Arena
-                    </h3>
-
-                    <p>
-                        PT Demo + Summative / Oral
-                    </p>
-
-                </div>
-
-                <div class="gameConcept">
-                    Demonstration • Explanation • Understanding
-                </div>
-
-                <div
-                    class="gameStatus locked"
-                    id="gameStatus7"
-                >
-                    LOCKED
-                </div>
-
-            </article>
-
+        <div
+            class="gameList"
+            id="gameList"
+        >
         </div>
 
     </section>
 
 
-    <!-- FOOTER -->
-
     <footer class="footer">
 
         <span>
-            ROBOTICS CODE ARENA // GRADE 8
+            ROBOTICS CODE ARENA • GRADE 8
         </span>
 
         <span>
-            PRACTICE MODE • NOT GRADED
+            PRACTICE • LEARN • TRY AGAIN
         </span>
 
     </footer>
@@ -2488,142 +3132,46 @@ body::before{
 </main>
 
 
-<!-- ======================================================
-     MODAL
-     ====================================================== -->
+<!-- =====================================================
+     GAME MODAL
+     ===================================================== -->
 
 <div
-    id="modalOverlay"
-    onclick="overlayClick(event)"
+    class="overlay"
+    id="gameOverlay"
+    onclick="overlayClose(event)"
 >
 
     <div class="modal">
 
         <div class="modalHeader">
 
-            <span>
-                ARENA GAME INFORMATION
+            <span id="modalHeaderText">
+                ROBOTICS CODE ARENA
             </span>
 
             <button
-                class="closeModal"
-                onclick="closeModal()"
+                class="closeButton"
+                onclick="closeGame()"
                 aria-label="Close"
             >
-                &times;
+                ×
             </button>
 
         </div>
 
 
-        <div class="modalBody">
-
-            <div
-                class="modalSuit"
-                id="modalSuit"
-            >
-                ♦
-            </div>
-
-            <div
-                class="modalLabel"
-                id="modalLabel"
-            >
-                CORE ARENA
-            </div>
-
-            <h2 id="modalTitle">
-                Code Quest
-            </h2>
-
-            <div
-                class="modalSub"
-                id="modalSub"
-            >
-                Arduino Programming
-            </div>
-
-            <p
-                class="modalDescription"
-                id="modalDescription"
-            >
-                Challenge description.
-            </p>
-
-
-            <div
-                class="modalInfo"
-                id="modalInfo"
-            >
-
-                <div class="modalInfoBox">
-
-                    <small>
-                        LEVEL
-                    </small>
-
-                    <strong id="modalLevel">
-                        EASY
-                    </strong>
-
-                </div>
-
-                <div class="modalInfoBox">
-
-                    <small>
-                        MODE
-                    </small>
-
-                    <strong id="modalMode">
-                        PRACTICE
-                    </strong>
-
-                </div>
-
-                <div class="modalInfoBox">
-
-                    <small>
-                        STATUS
-                    </small>
-
-                    <strong id="modalStatus">
-                        OPEN
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <div class="practiceNotice">
-
-                This arena is for practice. Questions will focus
-                on Grade 8 Robotics concepts discussed in class.
-                Take your time, read carefully, and learn from
-                incorrect answers.
-
-            </div>
-
+        <div
+            class="modalBody"
+            id="modalBody"
+        >
         </div>
 
 
-        <div class="modalFooter">
-
-            <button
-                class="modalCancel"
-                onclick="closeModal()"
-            >
-                CLOSE
-            </button>
-
-            <button
-                class="modalContinue"
-                id="modalContinue"
-                onclick="startSelectedGame()"
-            >
-                CONTINUE
-            </button>
-
+        <div
+            class="modalFooter"
+            id="modalFooter"
+        >
         </div>
 
     </div>
@@ -2631,747 +3179,1946 @@ body::before{
 </div>
 
 
-<!-- ======================================================
-     TOAST
-     ====================================================== -->
+<!-- =====================================================
+     COMIC REMINDER BUBBLE
+     ===================================================== -->
 
-<div id="toast">
-    Arena message
+<div id="arenaBubble">
+
+    <button
+        class="bubbleClose"
+        onclick="hideBubble()"
+        aria-label="Close reminder"
+    >
+        ×
+    </button>
+
+    <div
+        class="bubbleLabel"
+        id="bubbleLabel"
+    >
+        ARENA TIP!
+    </div>
+
+    <div
+        class="bubbleTitle"
+        id="bubbleTitle"
+    >
+        ARE YOU READY?
+    </div>
+
+    <div
+        class="bubbleText"
+        id="bubbleText"
+    >
+        Your challenge is waiting!
+    </div>
+
 </div>
 
 
 <script>
 
 /* =========================================================
-   ROBOTICS CODE ARENA
-   V4 CONFIGURATION
+   BASIC CONFIG
    ========================================================= */
 
+const PASS_SCORE = 3;
+const QUESTIONS_PER_GAME = 5;
 
-/*
-   =========================================================
-   TEACHER CONTROL
-
-   Change CURRENT_WEEK when you want to open
-   another weekly lesson.
-
-   1 = Environmental Monitoring
-   2 = Smart Motion Alarm
-   3 = Password Door Lock
-   4 = RFID Access Control
-   5 = System Integration
-   6 = PT Development
-   7 = Final Arena
-
-   Example:
-
-   const CURRENT_WEEK = 2;
-
-   This will make Games 1 and 2 available.
-   =========================================================
-*/
-
-const CURRENT_WEEK = 1;
-
-
-/*
-   This is only the interface foundation.
-
-   Actual question banks will be added next.
-*/
-
-let selectedGame = null;
+let activeQuestions = [];
+let currentQuestion = 0;
+let currentScore = 0;
+let answerLocked = false;
+let activeGame = null;
+let bubbleTimer = null;
 
 
 /* =========================================================
-   WEEKLY GAME DATA
+   WEEKLY GAME MAP
    ========================================================= */
 
-const weeklyGames = {
+const weeklyGames = [
 
-    1:{
-        number:"01",
+    {
+        id:1,
         suit:"♦",
         title:"Environmental Monitoring",
-        subtitle:"DHT11 + MQ135",
-        description:
-            "Practice temperature, humidity, air quality, sensor readings, Serial Monitor output, and simple Arduino decision-making.",
+        components:"DHT11 + MQ135",
         concepts:
-            "Temperature • Humidity • Air Quality",
-        level:"EASY"
+            "Temperature • Humidity • Air Quality • Sensor Readings"
     },
 
-    2:{
-        number:"02",
+    {
+        id:2,
         suit:"♣",
         title:"Smart Motion Alarm",
-        subtitle:"PIR + Buzzer + LED",
-        description:
-            "Practice motion detection, digital input, LED indicators, buzzer output, and simple alarm logic.",
+        components:"PIR + Buzzer + LED",
         concepts:
-            "Motion • Digital Input • Alarm Output",
-        level:"EASY"
+            "Motion Detection • Digital Input • Alarm Output"
     },
 
-    3:{
-        number:"03",
+    {
+        id:3,
         suit:"♥",
         title:"Password Door Lock",
-        subtitle:"Keypad + LCD + Stepper Motor",
-        description:
-            "Practice keypad input, password checking, LCD feedback, and basic stepper motor control.",
+        components:"Keypad + LCD + Stepper",
         concepts:
-            "User Input • Password • Motor Control",
-        level:"EASY"
+            "User Input • Password Checking • Motor Control"
     },
 
-    4:{
-        number:"04",
+    {
+        id:4,
         suit:"♠",
         title:"RFID Access Control",
-        subtitle:"RFID + Stepper Motor + LEDs",
-        description:
-            "Practice RFID concepts, UID checking, authentication, LED indicators, and access-control logic.",
+        components:"RFID + Stepper + LEDs",
         concepts:
-            "UID • Authentication • Access Control",
-        level:"EASY"
+            "UID • Authentication • Access Control"
     },
 
-    5:{
-        number:"05",
-        suit:"◇",
+    {
+        id:5,
+        suit:"◆",
         title:"System Integration Challenge",
-        subtitle:"Selected Components",
-        description:
-            "Review how sensors, input devices, processing, and output components work together in one Robotics system.",
+        components:"Selected Components",
         concepts:
-            "Input • Process • Output",
-        level:"MODERATE"
+            "Sensors • Input • Process • Output"
     },
 
-    6:{
-        number:"06",
-        suit:"◇",
+    {
+        id:6,
+        suit:"◆",
         title:"Performance Task Development",
-        subtitle:"Design + Build + Code",
-        description:
-            "Use this area to prepare for the performance task by reviewing system design, components, programming, testing, and troubleshooting.",
+        components:"Multiple Components",
         concepts:
-            "Design • Build • Program • Test",
-        level:"PREPARATION"
+            "Design • Build • Code • Test"
     },
 
-    7:{
-        number:"07",
+    {
+        id:7,
         suit:"★",
         title:"Final Arena",
-        subtitle:"PT Demo + Summative / Oral",
-        description:
-            "Final review for demonstrating your project and explaining how your Robotics system and code work.",
+        components:"PT Demo + Summative / Oral",
         concepts:
-            "Demonstration • Explanation • Understanding",
-        level:"FINAL REVIEW"
+            "Demonstration • Explanation • Understanding"
     }
 
-};
+];
 
 
 /* =========================================================
-   CORE ARENA DATA
+   GAME 01 — ENVIRONMENTAL MONITORING
    ========================================================= */
 
-const coreGames = {
+const week1Questions = [
 
-    code:{
-        suit:"♦",
-        title:"Code Quest",
-        subtitle:"Arduino Programming",
-        description:
-            "Practice Arduino commands, variables, setup and loop, digital and analog input, output commands, if/else statements, code reading, and simple debugging.",
-        level:"EASY",
-        mode:"UNLIMITED"
+    {
+        type:"SENSOR CHECK!",
+        question:
+            "Which sensor measures temperature and humidity?",
+
+        choices:[
+            "DHT11",
+            "MQ135",
+            "LED",
+            "Buzzer"
+        ],
+
+        answer:0,
+
+        explanation:
+            "The DHT11 measures temperature and humidity."
     },
 
-    circuit:{
-        suit:"♣",
-        title:"Circuit Quest",
-        subtitle:"Circuits & Components",
-        description:
-            "Practice identifying components, Arduino pins, input and output devices, basic wiring, sensor connections, LEDs, buzzers, and circuit behavior.",
-        level:"EASY",
-        mode:"UNLIMITED"
+
+    {
+        type:"SENSOR CHECK!",
+        question:
+            "Which sensor is used to detect changes related to air quality?",
+
+        choices:[
+            "Push button",
+            "DHT11",
+            "MQ135",
+            "LED"
+        ],
+
+        answer:2,
+
+        explanation:
+            "The MQ135 is used for air-quality sensing."
     },
 
-    recall:{
-        suit:"♥",
-        title:"Robo Recall",
-        subtitle:"Concepts & Terminology",
-        description:
-            "Review important Robotics vocabulary, component functions, sensor purposes, programming concepts, and ideas discussed in your Grade 8 lessons.",
-        level:"EASY",
-        mode:"UNLIMITED"
+
+    {
+        type:"CODE CHECK!",
+        question:
+            "Which command reads the analog sensor connected to A0?",
+
+        code:
+`airValue = ________;`,
+
+        choices:[
+            "digitalWrite(A0)",
+            "analogRead(A0)",
+            "Serial.println(A0)",
+            "pinMode(A0)"
+        ],
+
+        answer:1,
+
+        explanation:
+            "analogRead(A0) reads the analog value from pin A0."
+    },
+
+
+    {
+        type:"READ THE CODE!",
+        question:
+            "What happens when airValue is greater than 300?",
+
+        code:
+`if (airValue > 300) {
+    digitalWrite(redLED, HIGH);
+}
+else {
+    digitalWrite(redLED, LOW);
+}`,
+
+        choices:[
+            "The red LED turns ON",
+            "The red LED turns OFF",
+            "The Arduino stops",
+            "The sensor turns OFF"
+        ],
+
+        answer:0,
+
+        explanation:
+            "The condition sends HIGH to the red LED, so the red LED turns ON."
+    },
+
+
+    {
+        type:"LOGIC CHECK!",
+        question:
+            "Which programming statement allows Arduino to choose between two actions?",
+
+        choices:[
+            "delay()",
+            "if / else",
+            "pinMode()",
+            "Serial.begin()"
+        ],
+
+        answer:1,
+
+        explanation:
+            "if / else lets Arduino make a decision based on a condition."
+    },
+
+
+    {
+        type:"CODE CHECK!",
+        question:
+            "What is the purpose of Serial.println()?",
+
+        choices:[
+            "Turn on an LED",
+            "Read temperature only",
+            "Display information in the Serial Monitor",
+            "Connect a sensor"
+        ],
+
+        answer:2,
+
+        explanation:
+            "Serial.println() displays or sends information to the Serial Monitor."
+    },
+
+
+    {
+        type:"SENSOR CHECK!",
+        question:
+            "What does DHT.read11(DHT_PIN) tell the Arduino to do?",
+
+        choices:[
+            "Read the DHT11 sensor",
+            "Turn on the DHT11",
+            "Read the MQ135",
+            "Turn on an LED"
+        ],
+
+        answer:0,
+
+        explanation:
+            "DHT.read11(DHT_PIN) reads information from the DHT11 sensor."
+    },
+
+
+    {
+        type:"SYSTEM CHECK!",
+        question:
+            "Which sequence best describes how the monitoring system works?",
+
+        choices:[
+            "Act → Decide → Read → Sense",
+            "Sense → Read → Decide → Act",
+            "Read → Act → Sense → Decide",
+            "Decide → Sense → Act → Read"
+        ],
+
+        answer:1,
+
+        explanation:
+            "The system senses information, reads it, decides what to do, then performs an action."
+    },
+
+
+    {
+        type:"INPUT OR OUTPUT?",
+        question:
+            "Which component is an INPUT device in the environmental monitoring system?",
+
+        choices:[
+            "LED",
+            "DHT11",
+            "Buzzer",
+            "Display light"
+        ],
+
+        answer:1,
+
+        explanation:
+            "The DHT11 sends sensor information to Arduino, so it acts as an input."
+    },
+
+
+    {
+        type:"CODE CHECK!",
+        question:
+            "What does this command do?",
+
+        code:
+`digitalWrite(redLED, LOW);`,
+
+        choices:[
+            "Reads the LED",
+            "Turns the red LED ON",
+            "Turns the red LED OFF",
+            "Changes the sensor reading"
+        ],
+
+        answer:2,
+
+        explanation:
+            "LOW turns the red LED OFF in the standard LED circuit used in class."
     }
 
-};
+];
 
 
 /* =========================================================
-   PLAYER REGISTRATION
+   CORE ARENA — CODE QUEST
+   ========================================================= */
+
+const codeQuestions = [
+
+    {
+        type:"CODE QUEST!",
+
+        question:
+            "Which function runs once when Arduino starts?",
+
+        choices:[
+            "loop()",
+            "setup()",
+            "analogRead()",
+            "digitalWrite()"
+        ],
+
+        answer:1,
+
+        explanation:
+            "setup() runs once when Arduino starts."
+    },
+
+
+    {
+        type:"CODE QUEST!",
+
+        question:
+            "Which function repeats while Arduino is running?",
+
+        choices:[
+            "setup()",
+            "begin()",
+            "loop()",
+            "read()"
+        ],
+
+        answer:2,
+
+        explanation:
+            "loop() repeats continuously while the program is running."
+    },
+
+
+    {
+        type:"CODE QUEST!",
+
+        question:
+            "Which command reads an analog value?",
+
+        choices:[
+            "analogRead()",
+            "digitalWrite()",
+            "pinMode()",
+            "delay()"
+        ],
+
+        answer:0,
+
+        explanation:
+            "analogRead() reads an analog input value."
+    },
+
+
+    {
+        type:"CODE QUEST!",
+
+        question:
+            "What is the main purpose of an if statement?",
+
+        choices:[
+            "Make a decision",
+            "Connect a wire",
+            "Create electricity",
+            "Restart Arduino"
+        ],
+
+        answer:0,
+
+        explanation:
+            "An if statement checks a condition so Arduino can make a decision."
+    },
+
+
+    {
+        type:"CODE QUEST!",
+
+        question:
+            "In the standard LED circuit used in class, what does HIGH usually do?",
+
+        choices:[
+            "Turns the LED ON",
+            "Removes the LED",
+            "Reads a sensor",
+            "Turns Arduino OFF"
+        ],
+
+        answer:0,
+
+        explanation:
+            "HIGH turns the LED ON in the standard circuit used in class."
+    },
+
+
+    {
+        type:"CODE QUEST!",
+
+        question:
+            "What does delay(200) do?",
+
+        choices:[
+            "Waits for 200 milliseconds",
+            "Reads pin 200",
+            "Turns on 200 LEDs",
+            "Repeats 200 times"
+        ],
+
+        answer:0,
+
+        explanation:
+            "delay(200) pauses the program for 200 milliseconds."
+    },
+
+
+    {
+        type:"CODE QUEST!",
+
+        question:
+            "Which command can display information in the Serial Monitor?",
+
+        choices:[
+            "Serial.println()",
+            "digitalRead()",
+            "pinMode()",
+            "tone()"
+        ],
+
+        answer:0,
+
+        explanation:
+            "Serial.println() can display information in the Serial Monitor."
+    }
+
+];
+
+
+/* =========================================================
+   CORE ARENA — CIRCUIT QUEST
+   ========================================================= */
+
+const circuitQuestions = [
+
+    {
+        type:"CIRCUIT QUEST!",
+
+        question:
+            "Which component provides a visual indication?",
+
+        choices:[
+            "LED",
+            "DHT11",
+            "Push button",
+            "MQ135"
+        ],
+
+        answer:0,
+
+        explanation:
+            "An LED provides a visual indication by producing light."
+    },
+
+
+    {
+        type:"CIRCUIT QUEST!",
+
+        question:
+            "Which component measures temperature and humidity?",
+
+        choices:[
+            "Buzzer",
+            "DHT11",
+            "LED",
+            "Stepper motor"
+        ],
+
+        answer:1,
+
+        explanation:
+            "The DHT11 measures temperature and humidity."
+    },
+
+
+    {
+        type:"CIRCUIT QUEST!",
+
+        question:
+            "Which Arduino pin is used for the analog air-quality reading in our example?",
+
+        choices:[
+            "A0",
+            "GND",
+            "5V",
+            "RESET"
+        ],
+
+        answer:0,
+
+        explanation:
+            "The air-quality example reads the sensor through analog pin A0."
+    },
+
+
+    {
+        type:"CIRCUIT QUEST!",
+
+        question:
+            "Which component can produce sound as an output?",
+
+        choices:[
+            "Buzzer",
+            "Push button",
+            "PIR sensor",
+            "DHT11"
+        ],
+
+        answer:0,
+
+        explanation:
+            "The buzzer produces sound, so it is an output device."
+    },
+
+
+    {
+        type:"CIRCUIT QUEST!",
+
+        question:
+            "Which component detects motion in the Smart Motion Alarm lesson?",
+
+        choices:[
+            "PIR sensor",
+            "LED",
+            "LCD",
+            "Stepper motor"
+        ],
+
+        answer:0,
+
+        explanation:
+            "The PIR sensor is used to detect motion."
+    },
+
+
+    {
+        type:"CIRCUIT QUEST!",
+
+        question:
+            "Which of these is an OUTPUT device?",
+
+        choices:[
+            "LED",
+            "Push button",
+            "PIR sensor",
+            "MQ135"
+        ],
+
+        answer:0,
+
+        explanation:
+            "The LED receives a command from Arduino and provides a visual output."
+    }
+
+];
+
+
+/* =========================================================
+   CORE ARENA — ROBO RECALL
+   ========================================================= */
+
+const recallQuestions = [
+
+    {
+        type:"ROBO RECALL!",
+
+        question:
+            "What does INPUT mean in a Robotics system?",
+
+        choices:[
+            "Information received by the system",
+            "The final action only",
+            "A decoration",
+            "Only the power cable"
+        ],
+
+        answer:0,
+
+        explanation:
+            "Input is information received by the system from a sensor or input device."
+    },
+
+
+    {
+        type:"ROBO RECALL!",
+
+        question:
+            "What does OUTPUT mean in a Robotics system?",
+
+        choices:[
+            "An action or response produced by the system",
+            "Only sensor data",
+            "Only Arduino code",
+            "A disconnected component"
+        ],
+
+        answer:0,
+
+        explanation:
+            "Output is the action or response produced by the system."
+    },
+
+
+    {
+        type:"ROBO RECALL!",
+
+        question:
+            "Which sequence correctly describes a simple Robotics system?",
+
+        choices:[
+            "Input → Process → Output",
+            "Output → Input → Process",
+            "Process → Output → Input",
+            "Output → Process → Input"
+        ],
+
+        answer:0,
+
+        explanation:
+            "A basic Robotics system receives input, processes it, then produces an output."
+    },
+
+
+    {
+        type:"ROBO RECALL!",
+
+        question:
+            "What is the main role of Arduino Uno in our systems?",
+
+        choices:[
+            "Read and process information",
+            "Only produce light",
+            "Only detect temperature",
+            "Replace every sensor"
+        ],
+
+        answer:0,
+
+        explanation:
+            "Arduino reads inputs, processes information, and controls outputs."
+    },
+
+
+    {
+        type:"ROBO RECALL!",
+
+        question:
+            "What is a sensor mainly used for?",
+
+        choices:[
+            "Detect or measure information",
+            "Decorate a circuit",
+            "Write the program",
+            "Replace Arduino"
+        ],
+
+        answer:0,
+
+        explanation:
+            "Sensors detect or measure information from the environment."
+    },
+
+
+    {
+        type:"ROBO RECALL!",
+
+        question:
+            "Why do we test a Robotics system?",
+
+        choices:[
+            "To check if it works correctly",
+            "To make wires longer",
+            "To remove the program",
+            "To avoid sensors"
+        ],
+
+        answer:0,
+
+        explanation:
+            "Testing helps us check the system and identify problems that need troubleshooting."
+    }
+
+];
+
+
+/* =========================================================
+   STORAGE
+   ========================================================= */
+
+function getStudent(){
+
+    const raw =
+        localStorage.getItem(
+            "grade8ArenaStudent"
+        );
+
+    if(!raw){
+        return null;
+    }
+
+    try{
+        return JSON.parse(raw);
+    }
+    catch{
+        return null;
+    }
+
+}
+
+
+function progressKey(){
+
+    const student =
+        getStudent();
+
+    if(!student){
+        return "grade8ArenaProgress";
+    }
+
+    const safe =
+        (
+            student.name +
+            "_" +
+            student.section
+        )
+        .toLowerCase()
+        .replace(
+            /[^a-z0-9]/g,
+            "_"
+        );
+
+    return (
+        "grade8ArenaProgress_" +
+        safe
+    );
+
+}
+
+
+function getProgress(){
+
+    const raw =
+        localStorage.getItem(
+            progressKey()
+        );
+
+    if(!raw){
+
+        return {
+            unlocked:1,
+            cleared:[],
+            bestScores:{}
+        };
+
+    }
+
+    try{
+        return JSON.parse(raw);
+    }
+
+    catch{
+
+        return {
+            unlocked:1,
+            cleared:[],
+            bestScores:{}
+        };
+
+    }
+
+}
+
+
+function saveProgress(progress){
+
+    localStorage.setItem(
+        progressKey(),
+        JSON.stringify(progress)
+    );
+
+}
+
+
+/* =========================================================
+   ENTRY
    ========================================================= */
 
 function enterArena(){
 
     const name =
         document
-        .getElementById("studentName")
+        .getElementById(
+            "studentName"
+        )
         .value
         .trim();
 
+
     const section =
         document
-        .getElementById("studentSection")
+        .getElementById(
+            "studentSection"
+        )
         .value
         .trim();
 
 
     if(!name || !section){
 
-        showToast(
+        alert(
             "Please enter your name and section."
         );
 
         return;
+
     }
 
 
     const student = {
         name:name,
-        section:section,
-        grade:"Grade 8"
+        section:section
     };
 
 
     localStorage.setItem(
-        "roboticsArenaGrade8Student",
+        "grade8ArenaStudent",
         JSON.stringify(student)
     );
 
 
     showDashboard(student);
 
+
+    setTimeout(
+        function(){
+
+            showBubble(
+                "ARENA NOTICE!",
+                "ARE YOU READY?",
+                "Your Grade 8 Robotics challenges are waiting. Pick a game when you're ready!"
+            );
+
+        },
+        850
+    );
+
 }
 
-
-/* =========================================================
-   SHOW DASHBOARD
-   ========================================================= */
 
 function showDashboard(student){
 
     document
-        .getElementById("entryScreen")
-        .style
-        .display = "none";
+        .getElementById(
+            "entryScreen"
+        )
+        .style.display =
+        "none";
 
 
     document
-        .getElementById("dashboard")
-        .style
-        .display = "block";
+        .getElementById(
+            "dashboard"
+        )
+        .style.display =
+        "block";
 
 
     document
-        .getElementById("displayName")
+        .getElementById(
+            "displayName"
+        )
         .textContent =
         student.name;
 
 
     document
-        .getElementById("displayDetails")
+        .getElementById(
+            "displayDetails"
+        )
         .textContent =
-        "Grade 8 • " + student.section;
-
-
-    const firstName =
-        student.name
-        .split(" ")[0];
+        "Grade 8 • " +
+        student.section;
 
 
     document
-        .getElementById("welcomeHeading")
+        .getElementById(
+            "welcomeHeading"
+        )
         .textContent =
-        "Welcome, " + firstName + ".";
+        "Ready, " +
+        student.name.split(" ")[0] +
+        "?";
 
 
-    applyWeeklyAvailability();
+    renderWeeklyGames();
 
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    scheduleReminder();
 
 }
 
 
-/* =========================================================
-   RESTORE PLAYER
-   ========================================================= */
+function restoreStudent(){
 
-function restorePlayer(){
+    const student =
+        getStudent();
 
-    const saved =
-        localStorage.getItem(
-            "roboticsArenaGrade8Student"
-        );
-
-
-    if(!saved){
-        return;
-    }
-
-
-    try{
-
-        const student =
-            JSON.parse(saved);
-
-
+    if(student){
         showDashboard(student);
-
-    }
-
-    catch(error){
-
-        localStorage.removeItem(
-            "roboticsArenaGrade8Student"
-        );
-
     }
 
 }
 
-
-/* =========================================================
-   CHANGE PLAYER
-   ========================================================= */
 
 function changePlayer(){
 
+    hideBubble();
+
     localStorage.removeItem(
-        "roboticsArenaGrade8Student"
+        "grade8ArenaStudent"
     );
 
 
     document
-        .getElementById("dashboard")
-        .style
-        .display = "none";
-
-
-    document
-        .getElementById("entryScreen")
-        .style
-        .display = "flex";
-
-
-    document
-        .getElementById("studentName")
-        .value = "";
-
-
-    document
-        .getElementById("studentSection")
-        .value = "";
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-/* =========================================================
-   APPLY WEEKLY AVAILABILITY
-   ========================================================= */
-
-function applyWeeklyAvailability(){
-
-    for(let i = 1; i <= 7; i++){
-
-        const row =
-            document.getElementById(
-                "gameRow" + i
-            );
-
-        const status =
-            document.getElementById(
-                "gameStatus" + i
-            );
-
-
-        if(!row || !status){
-            continue;
-        }
-
-
-        if(i <= CURRENT_WEEK){
-
-            row.classList.remove(
-                "locked"
-            );
-
-            row.classList.add(
-                "available"
-            );
-
-
-            status.className =
-                "gameStatus available";
-
-
-            status.textContent =
-                "AVAILABLE";
-
-
-            row.onclick =
-                function(){
-
-                    openWeeklyGame(i);
-
-                };
-
-        }
-
-        else{
-
-            row.classList.remove(
-                "available"
-            );
-
-            row.classList.add(
-                "locked"
-            );
-
-
-            status.className =
-                "gameStatus locked";
-
-
-            status.textContent =
-                "LOCKED";
-
-
-            row.onclick =
-                function(){
-
-                    lockedGame(i);
-
-                };
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   CORE ARENA
-   ========================================================= */
-
-function openCoreGame(type){
-
-    const game =
-        coreGames[type];
-
-
-    if(!game){
-        return;
-    }
-
-
-    selectedGame = {
-        type:"core",
-        id:type
-    };
-
-
-    document
-        .getElementById("modalSuit")
-        .textContent =
-        game.suit;
-
-
-    document
-        .getElementById("modalLabel")
-        .textContent =
-        "CORE ARENA";
-
-
-    document
-        .getElementById("modalTitle")
-        .textContent =
-        game.title;
-
-
-    document
-        .getElementById("modalSub")
-        .textContent =
-        game.subtitle;
-
-
-    document
-        .getElementById("modalDescription")
-        .textContent =
-        game.description;
-
-
-    document
-        .getElementById("modalLevel")
-        .textContent =
-        game.level;
-
-
-    document
-        .getElementById("modalMode")
-        .textContent =
-        game.mode;
-
-
-    document
-        .getElementById("modalStatus")
-        .textContent =
-        "OPEN";
-
-
-    document
-        .getElementById("modalContinue")
-        .style
-        .display =
-        "inline-block";
-
-
-    document
-        .getElementById("modalContinue")
-        .textContent =
-        "ENTER";
-
-
-    openModal();
-
-}
-
-
-/* =========================================================
-   WEEKLY GAME
-   ========================================================= */
-
-function openWeeklyGame(number){
-
-    if(number > CURRENT_WEEK){
-
-        lockedGame(number);
-
-        return;
-
-    }
-
-
-    const game =
-        weeklyGames[number];
-
-
-    selectedGame = {
-        type:"weekly",
-        id:number
-    };
-
-
-    document
-        .getElementById("modalSuit")
-        .textContent =
-        game.suit;
-
-
-    document
-        .getElementById("modalLabel")
-        .textContent =
-        "GAME " + game.number;
-
-
-    document
-        .getElementById("modalTitle")
-        .textContent =
-        game.title;
-
-
-    document
-        .getElementById("modalSub")
-        .textContent =
-        game.subtitle;
-
-
-    document
-        .getElementById("modalDescription")
-        .textContent =
-        game.description;
-
-
-    document
-        .getElementById("modalLevel")
-        .textContent =
-        game.level;
-
-
-    document
-        .getElementById("modalMode")
-        .textContent =
-        "WEEKLY GAME";
-
-
-    document
-        .getElementById("modalStatus")
-        .textContent =
-        "AVAILABLE";
-
-
-    document
-        .getElementById("modalContinue")
-        .style
-        .display =
-        "inline-block";
-
-
-    document
-        .getElementById("modalContinue")
-        .textContent =
-        "ENTER GAME";
-
-
-    openModal();
-
-}
-
-
-/* =========================================================
-   LOCKED GAME
-   ========================================================= */
-
-function lockedGame(number){
-
-    const game =
-        weeklyGames[number];
-
-
-    selectedGame = null;
-
-
-    document
-        .getElementById("modalSuit")
-        .textContent =
-        game.suit;
-
-
-    document
-        .getElementById("modalLabel")
-        .textContent =
-        "GAME " + game.number;
-
-
-    document
-        .getElementById("modalTitle")
-        .textContent =
-        game.title;
-
-
-    document
-        .getElementById("modalSub")
-        .textContent =
-        game.subtitle;
-
-
-    document
-        .getElementById("modalDescription")
-        .textContent =
-        "This game is not available yet. It will open after the corresponding classroom lesson.";
-
-
-    document
-        .getElementById("modalLevel")
-        .textContent =
-        game.level;
-
-
-    document
-        .getElementById("modalMode")
-        .textContent =
-        "WEEKLY GAME";
-
-
-    document
-        .getElementById("modalStatus")
-        .textContent =
-        "LOCKED";
-
-
-    document
-        .getElementById("modalContinue")
-        .style
-        .display =
+        .getElementById(
+            "dashboard"
+        )
+        .style.display =
         "none";
 
 
-    openModal();
+    document
+        .getElementById(
+            "entryScreen"
+        )
+        .style.display =
+        "flex";
+
+
+    document
+        .getElementById(
+            "studentName"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "studentSection"
+        )
+        .value = "";
+
+
+    window.scrollTo(
+        0,
+        0
+    );
 
 }
 
 
 /* =========================================================
-   START SELECTED GAME
-
-   Actual question engine will replace this
-   placeholder in the next version.
+   WEEKLY GAME LIST
    ========================================================= */
 
-function startSelectedGame(){
+function renderWeeklyGames(){
 
-    if(!selectedGame){
+    const container =
+        document.getElementById(
+            "gameList"
+        );
+
+
+    const progress =
+        getProgress();
+
+
+    container.innerHTML = "";
+
+
+    weeklyGames.forEach(
+        function(game){
+
+            const cleared =
+                progress.cleared.includes(
+                    game.id
+                );
+
+
+            const available =
+                game.id <=
+                progress.unlocked;
+
+
+            const row =
+                document.createElement(
+                    "article"
+                );
+
+
+            row.className =
+                "gameRow " +
+                (
+                    cleared
+                    ? "cleared"
+                    :
+                    available
+                    ? "available"
+                    : "locked"
+                );
+
+
+            let statusText =
+                "LOCKED";
+
+            let statusClass =
+                "locked";
+
+
+            if(cleared){
+
+                statusText =
+                    "CLEARED!";
+
+                statusClass =
+                    "cleared";
+
+            }
+
+            else if(available){
+
+                statusText =
+                    "PLAY!";
+
+                statusClass =
+                    "available";
+
+            }
+
+
+            row.innerHTML = `
+
+                <div class="gameNumber">
+                    ${String(game.id).padStart(2,"0")}
+                </div>
+
+                <div class="gameInfo">
+
+                    <h3>
+                        ${game.suit}
+                        ${game.title}
+                    </h3>
+
+                    <p>
+                        ${game.components}
+                    </p>
+
+                </div>
+
+                <div class="gameConcept">
+                    ${game.concepts}
+                </div>
+
+                <div class="gameStatus ${statusClass}">
+                    ${statusText}
+                </div>
+
+            `;
+
+
+            row.onclick =
+                function(){
+
+                    if(available){
+
+                        startWeeklyGame(
+                            game.id
+                        );
+
+                    }
+
+                    else{
+
+                        showBubble(
+                            "GAME LOCKED!",
+                            "NOT YET!",
+                            "Clear the previous weekly game first to unlock this challenge."
+                        );
+
+                    }
+
+                };
+
+
+            container.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   START WEEKLY GAME
+   ========================================================= */
+
+function startWeeklyGame(id){
+
+    const progress =
+        getProgress();
+
+
+    if(
+        id >
+        progress.unlocked
+    ){
+
+        showBubble(
+            "GAME LOCKED!",
+            "NOT YET!",
+            "Clear the previous weekly game before entering this challenge."
+        );
+
         return;
+
     }
 
 
-    let title = "";
+    /*
+       Game 01 is currently the active
+       playable weekly challenge.
+    */
+
+    if(id === 1){
+
+        activeGame = {
+
+            type:"weekly",
+            id:1,
+            title:
+                "Environmental Monitoring"
+
+        };
 
 
-    if(selectedGame.type === "core"){
+        activeQuestions =
+            randomQuestions(
+                week1Questions,
+                QUESTIONS_PER_GAME
+            );
+
+
+        beginQuiz();
+
+        return;
+
+    }
+
+
+    /*
+       Future lesson games are shown as
+       unlocked previews for now.
+    */
+
+    showGamePreview(id);
+
+}
+
+
+/* =========================================================
+   CORE GAME
+   ========================================================= */
+
+function startCoreGame(type){
+
+    let bank;
+    let title;
+
+
+    if(type === "code"){
+
+        bank =
+            codeQuestions;
 
         title =
-            coreGames[
-                selectedGame.id
-            ].title;
+            "Code Quest";
+
+    }
+
+    else if(type === "circuit"){
+
+        bank =
+            circuitQuestions;
+
+        title =
+            "Circuit Quest";
 
     }
 
     else{
 
+        bank =
+            recallQuestions;
+
         title =
-            weeklyGames[
-                selectedGame.id
-            ].title;
+            "Robo Recall";
 
     }
 
 
-    closeModal();
+    activeGame = {
+
+        type:"core",
+        id:type,
+        title:title
+
+    };
 
 
-    showToast(
-        title +
-        " is ready for its question bank."
+    activeQuestions =
+        randomQuestions(
+            bank,
+            QUESTIONS_PER_GAME
+        );
+
+
+    beginQuiz();
+
+}
+
+
+/* =========================================================
+   FUTURE GAME PREVIEW
+   ========================================================= */
+
+function showGamePreview(id){
+
+    const game =
+        weeklyGames.find(
+            g => g.id === id
+        );
+
+
+    document
+        .getElementById(
+            "modalHeaderText"
+        )
+        .textContent =
+        "GAME #" +
+        String(id).padStart(2,"0");
+
+
+    document
+        .getElementById(
+            "modalBody"
+        )
+        .innerHTML = `
+
+        <div class="modalSuit">
+            ${game.suit}
+        </div>
+
+        <div class="modalLabel">
+            WEEK ${String(id).padStart(2,"0")}
+        </div>
+
+        <h2>
+            ${game.title}
+        </h2>
+
+        <div class="modalSub">
+            ${game.components}
+        </div>
+
+        <p class="modalDescription">
+            ${game.concepts}
+        </p>
+
+        <div class="unlockBox">
+
+            ★ GAME UNLOCKED!<br><br>
+
+            This challenge belongs to your next
+            Grade 8 Robotics lesson.
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById(
+            "modalFooter"
+        )
+        .innerHTML = `
+
+        <button
+            class="secondaryButton"
+            onclick="closeGame()"
+        >
+            BACK TO ARENA
+        </button>
+
+    `;
+
+
+    openGame();
+
+}
+
+
+/* =========================================================
+   RANDOM QUESTIONS
+   ========================================================= */
+
+function randomQuestions(
+    bank,
+    amount
+){
+
+    const shuffled =
+        [...bank]
+        .sort(
+            () =>
+            Math.random() - .5
+        );
+
+
+    return shuffled.slice(
+        0,
+        Math.min(
+            amount,
+            shuffled.length
+        )
     );
+
+}
+
+
+/* =========================================================
+   QUIZ
+   ========================================================= */
+
+function beginQuiz(){
+
+    currentQuestion = 0;
+    currentScore = 0;
+    answerLocked = false;
+
+    hideBubble();
+
+    openGame();
+
+    renderQuestion();
+
+}
+
+
+function renderQuestion(){
+
+    answerLocked = false;
+
+
+    const q =
+        activeQuestions[
+            currentQuestion
+        ];
+
+
+    const percent =
+        (
+            currentQuestion /
+            activeQuestions.length
+        ) * 100;
+
+
+    const letters =
+        ["A","B","C","D"];
+
+
+    let codeHTML = "";
+
+
+    if(q.code){
+
+        codeHTML = `
+
+            <div class="codeBlock">${escapeHTML(q.code)}</div>
+
+        `;
+
+    }
+
+
+    const answersHTML =
+        q.choices
+        .map(
+            (choice,index) => `
+
+            <button
+                class="answerButton"
+                onclick="selectAnswer(${index},this)"
+            >
+
+                <span class="answerLetter">
+                    ${letters[index]}
+                </span>
+
+                <span>
+                    ${choice}
+                </span>
+
+            </button>
+
+        `
+        )
+        .join("");
+
+
+    document
+        .getElementById(
+            "modalHeaderText"
+        )
+        .textContent =
+        activeGame.title.toUpperCase();
+
+
+    document
+        .getElementById(
+            "modalBody"
+        )
+        .innerHTML = `
+
+        <div class="quizTop">
+
+            <div class="quizCounter">
+                QUESTION
+                ${currentQuestion + 1}
+                /
+                ${activeQuestions.length}
+            </div>
+
+            <div class="quizScore">
+                SCORE ${currentScore}
+            </div>
+
+        </div>
+
+
+        <div class="progressTrack">
+
+            <div
+                class="progressFill"
+                style="width:${percent}%"
+            >
+            </div>
+
+        </div>
+
+
+        <div class="questionType">
+            ${q.type}
+        </div>
+
+
+        <h3 class="questionText">
+            ${q.question}
+        </h3>
+
+
+        ${codeHTML}
+
+
+        <div class="answers">
+            ${answersHTML}
+        </div>
+
+
+        <div
+            class="feedback"
+            id="answerFeedback"
+        >
+        </div>
+
+
+        <button
+            class="nextButton"
+            id="nextQuestionButton"
+            onclick="nextQuestion()"
+        >
+
+            ${
+                currentQuestion ===
+                activeQuestions.length - 1
+
+                ? "SHOW MY RESULT! →"
+                : "NEXT QUESTION →"
+            }
+
+        </button>
+
+    `;
+
+
+    document
+        .getElementById(
+            "modalFooter"
+        )
+        .innerHTML = "";
+
+}
+
+
+/* =========================================================
+   ANSWER
+   ========================================================= */
+
+function selectAnswer(
+    selected,
+    button
+){
+
+    if(answerLocked){
+        return;
+    }
+
+
+    answerLocked = true;
+
+
+    const q =
+        activeQuestions[
+            currentQuestion
+        ];
+
+
+    const buttons =
+        document.querySelectorAll(
+            ".answerButton"
+        );
+
+
+    buttons.forEach(
+        function(btn){
+            btn.disabled = true;
+        }
+    );
+
+
+    const feedback =
+        document.getElementById(
+            "answerFeedback"
+        );
+
+
+    if(selected === q.answer){
+
+        currentScore++;
+
+
+        button.classList.add(
+            "correct"
+        );
+
+
+        feedback.className =
+            "feedback correct";
+
+
+        feedback.innerHTML =
+
+            "<strong>★ NICE!</strong><br>" +
+
+            q.explanation;
+
+    }
+
+    else{
+
+        button.classList.add(
+            "wrong"
+        );
+
+
+        buttons[
+            q.answer
+        ]
+        .classList
+        .add(
+            "correct"
+        );
+
+
+        feedback.className =
+            "feedback wrong";
+
+
+        feedback.innerHTML =
+
+            "<strong>↻ ALMOST!</strong><br>" +
+
+            q.explanation;
+
+    }
+
+
+    feedback.style.display =
+        "block";
+
+
+    document
+        .getElementById(
+            "nextQuestionButton"
+        )
+        .style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   NEXT QUESTION
+   ========================================================= */
+
+function nextQuestion(){
+
+    currentQuestion++;
+
+
+    if(
+        currentQuestion >=
+        activeQuestions.length
+    ){
+
+        showResult();
+
+        return;
+
+    }
+
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   RESULT
+   ========================================================= */
+
+function showResult(){
+
+    const cleared =
+        currentScore >=
+        PASS_SCORE;
+
+
+    let unlockHTML = "";
+
+
+    if(
+        activeGame.type ===
+        "weekly"
+    ){
+
+        const progress =
+            getProgress();
+
+
+        const key =
+            "game" +
+            activeGame.id;
+
+
+        const oldBest =
+            progress.bestScores[key]
+            || 0;
+
+
+        if(
+            currentScore >
+            oldBest
+        ){
+
+            progress.bestScores[key] =
+                currentScore;
+
+        }
+
+
+        if(cleared){
+
+            if(
+                !progress.cleared.includes(
+                    activeGame.id
+                )
+            ){
+
+                progress.cleared.push(
+                    activeGame.id
+                );
+
+            }
+
+
+            if(
+                activeGame.id < 7
+            ){
+
+                progress.unlocked =
+                    Math.max(
+                        progress.unlocked,
+                        activeGame.id + 1
+                    );
+
+
+                const next =
+                    weeklyGames[
+                        activeGame.id
+                    ];
+
+
+                unlockHTML = `
+
+                    <div class="unlockBox">
+
+                        ★ NEW GAME UNLOCKED! ★
+                        <br><br>
+
+                        <strong>
+                            GAME
+                            #${String(next.id).padStart(2,"0")}
+                            <br>
+                            ${next.title}
+                        </strong>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        saveProgress(
+            progress
+        );
+
+
+        renderWeeklyGames();
+
+    }
+
+
+    const resultTitle =
+        cleared
+        ? "GAME CLEAR!"
+        : "TRY AGAIN!";
+
+
+    const resultText =
+        cleared
+
+        ?
+        "Nice work! You cleared the challenge. You can continue to the next game or practice again in the Core Arena."
+
+        :
+        "You're close! Review the explanations and give it another try. There is no penalty for practicing again.";
+
+
+    document
+        .getElementById(
+            "modalBody"
+        )
+        .innerHTML = `
+
+        <div class="result">
+
+            <div class="resultSymbol">
+                ${cleared ? "★" : "↻"}
+            </div>
+
+            <div class="resultLabel">
+                ${resultTitle}
+            </div>
+
+            <h2>
+                ${activeGame.title}
+            </h2>
+
+            <div class="resultScore">
+
+                <span>
+                    ${currentScore}
+                </span>
+
+                /
+
+                ${activeQuestions.length}
+
+            </div>
+
+            <p class="resultText">
+                ${resultText}
+            </p>
+
+            ${unlockHTML}
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById(
+            "modalFooter"
+        )
+        .innerHTML = `
+
+        <button
+            class="secondaryButton"
+            onclick="closeGame()"
+        >
+            BACK TO ARENA
+        </button>
+
+        <button
+            class="primaryButton"
+            onclick="retryGame()"
+        >
+            PLAY AGAIN!
+        </button>
+
+    `;
+
+
+    if(cleared){
+
+        setTimeout(
+            function(){
+
+                showBubble(
+                    "NICE WORK!",
+                    "GAME CLEAR!",
+                    "Challenge cleared! Your next game is waiting."
+                );
+
+            },
+            650
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RETRY
+   ========================================================= */
+
+function retryGame(){
+
+    if(
+        activeGame.type ===
+        "weekly"
+    ){
+
+        startWeeklyGame(
+            activeGame.id
+        );
+
+    }
+
+    else{
+
+        startCoreGame(
+            activeGame.id
+        );
+
+    }
 
 }
 
@@ -3380,36 +5127,38 @@ function startSelectedGame(){
    MODAL
    ========================================================= */
 
-function openModal(){
+function openGame(){
 
     document
-        .getElementById("modalOverlay")
-        .style
-        .display =
+        .getElementById(
+            "gameOverlay"
+        )
+        .style.display =
         "flex";
 
 }
 
 
-function closeModal(){
+function closeGame(){
 
     document
-        .getElementById("modalOverlay")
-        .style
-        .display =
+        .getElementById(
+            "gameOverlay"
+        )
+        .style.display =
         "none";
 
 }
 
 
-function overlayClick(event){
+function overlayClose(event){
 
     if(
         event.target.id ===
-        "modalOverlay"
+        "gameOverlay"
     ){
 
-        closeModal();
+        closeGame();
 
     }
 
@@ -3422,7 +5171,9 @@ document.addEventListener(
 
         if(event.key === "Escape"){
 
-            closeModal();
+            closeGame();
+
+            hideBubble();
 
         }
 
@@ -3431,23 +5182,197 @@ document.addEventListener(
 
 
 /* =========================================================
-   ARENA NOTICE ROTATION
-   Replaces the random floating bubbles.
+   COMIC REMINDERS
    ========================================================= */
 
-const arenaNotices = [
+const reminderMessages = [
 
-    "Practice mode only. Take your time and read each question carefully.",
+    {
+        label:"ARENA TIP!",
+        title:"READ IT FIRST!",
+        text:
+            "Take a good look at the code or question before choosing your answer."
+    },
 
-    "Incorrect answers are part of practice. Review the explanation and try again.",
+    {
+        label:"ROBOTICS TIP!",
+        title:"SENSE → READ → DECIDE → ACT!",
+        text:
+            "Think about how Arduino receives information before controlling an output."
+    },
 
-    "Code Quest, Circuit Quest, and Robo Recall are always available for review.",
+    {
+        label:"ARENA TIP!",
+        title:"NO RUSH!",
+        text:
+            "This is practice. Understanding the answer matters more than answering fast."
+    },
 
-    "Weekly games follow the lessons discussed during Grade 8 Robotics class.",
+    {
+        label:"CODE CHECK!",
+        title:"CHECK THE CONDITION!",
+        text:
+            "When you see if/else, look carefully at what must be true."
+    },
 
-    "Think before you choose. Accuracy matters more than speed.",
+    {
+        label:"KEEP GOING!",
+        title:"YOU'VE GOT THIS!",
+        text:
+            "A mistake is just another chance to understand how the system works."
+    },
 
-    "Use the arena to prepare for hands-on activities, projects, and assessments."
+    {
+        label:"GAME TIME!",
+        title:"READY FOR A CHALLENGE?",
+        text:
+            "Core Arena is always open whenever you want extra practice."
+    }
+
+];
+
+
+function showBubble(
+    label,
+    title,
+    text
+){
+
+    clearTimeout(
+        bubbleTimer
+    );
+
+
+    document
+        .getElementById(
+            "bubbleLabel"
+        )
+        .textContent =
+        label;
+
+
+    document
+        .getElementById(
+            "bubbleTitle"
+        )
+        .textContent =
+        title;
+
+
+    document
+        .getElementById(
+            "bubbleText"
+        )
+        .textContent =
+        text;
+
+
+    const bubble =
+        document.getElementById(
+            "arenaBubble"
+        );
+
+
+    bubble.classList.add(
+        "show"
+    );
+
+
+    bubbleTimer =
+        setTimeout(
+            hideBubble,
+            6000
+        );
+
+}
+
+
+function hideBubble(){
+
+    clearTimeout(
+        bubbleTimer
+    );
+
+
+    document
+        .getElementById(
+            "arenaBubble"
+        )
+        .classList
+        .remove(
+            "show"
+        );
+
+}
+
+
+function scheduleReminder(){
+
+    clearTimeout(
+        window.arenaReminderTimer
+    );
+
+
+    window.arenaReminderTimer =
+        setTimeout(
+            function(){
+
+                const overlay =
+                    document.getElementById(
+                        "gameOverlay"
+                    );
+
+
+                if(
+                    overlay.style.display
+                    !== "flex"
+                ){
+
+                    const reminder =
+                        reminderMessages[
+                            Math.floor(
+                                Math.random()
+                                *
+                                reminderMessages.length
+                            )
+                        ];
+
+
+                    showBubble(
+                        reminder.label,
+                        reminder.title,
+                        reminder.text
+                    );
+
+                }
+
+
+                scheduleReminder();
+
+            },
+            45000
+        );
+
+}
+
+
+/* =========================================================
+   TOP NEWS STRIP
+   ========================================================= */
+
+const notices = [
+
+    "Practice mode only — mistakes are part of learning!",
+
+    "Code Quest, Circuit Quest, and Robo Recall are always open!",
+
+    "Read the condition carefully before predicting an output.",
+
+    "Sense → Read → Decide → Act!",
+
+    "Weekly games follow your Grade 8 Robotics lessons.",
+
+    "Clear 3 out of 5 to unlock the next weekly game!"
 
 ];
 
@@ -3455,102 +5380,62 @@ const arenaNotices = [
 let noticeIndex = 0;
 
 
-function rotateNotice(){
-
-    const notice =
-        document.getElementById(
-            "noticeText"
-        );
-
-
-    notice.classList.add(
-        "change"
-    );
-
-
-    setTimeout(
-        function(){
-
-            noticeIndex =
-                (
-                    noticeIndex + 1
-                )
-                %
-                arenaNotices.length;
-
-
-            notice.textContent =
-                arenaNotices[
-                    noticeIndex
-                ];
-
-
-            notice.classList.remove(
-                "change"
-            );
-
-        },
-        250
-    );
-
-}
-
-
 setInterval(
-    rotateNotice,
+    function(){
+
+        noticeIndex =
+            (
+                noticeIndex + 1
+            )
+            %
+            notices.length;
+
+
+        document
+            .getElementById(
+                "noticeText"
+            )
+            .textContent =
+            notices[
+                noticeIndex
+            ];
+
+    },
     6500
 );
 
 
 /* =========================================================
-   TOAST
+   HTML SAFETY
    ========================================================= */
 
-let toastTimer;
+function escapeHTML(text){
 
+    return text
 
-function showToast(message){
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-    const toast =
-        document.getElementById(
-            "toast"
-        );
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-
-    toast.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        toastTimer
-    );
-
-
-    toastTimer =
-        setTimeout(
-            function(){
-
-                toast.classList.remove(
-                    "show"
-                );
-
-            },
-            2800
+        .replace(
+            />/g,
+            "&gt;"
         );
 
 }
 
 
 /* =========================================================
-   STARTUP
+   START
    ========================================================= */
 
-restorePlayer();
+restoreStudent();
 
 </script>
 
