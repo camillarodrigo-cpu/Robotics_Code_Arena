@@ -1,0 +1,3558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Robotics Code Arena | Grade 8</title>
+
+<style>
+/* =========================================================
+   ROBOTICS CODE ARENA — V4
+   Grade 8 Robotics
+   Arena-inspired classroom practice platform
+   ========================================================= */
+
+:root{
+    --bg:#080b10;
+    --bg2:#0d1118;
+    --panel:#111722;
+    --panel2:#151c28;
+    --panel3:#1a2230;
+
+    --line:#293445;
+    --line2:#35445a;
+
+    --text:#f3f6fa;
+    --muted:#8f9bad;
+    --muted2:#69778a;
+
+    --red:#e5484d;
+    --red-dark:#9f2f34;
+    --red-soft:rgba(229,72,77,.12);
+
+    --blue:#4c8dff;
+    --blue-soft:rgba(76,141,255,.12);
+
+    --yellow:#e6bd4a;
+    --yellow-soft:rgba(230,189,74,.12);
+
+    --green:#55b98a;
+    --green-soft:rgba(85,185,138,.12);
+
+    --white:#ffffff;
+
+    --shadow:0 22px 60px rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:var(--text);
+
+    background:
+        radial-gradient(
+            circle at 20% 0%,
+            rgba(76,141,255,.08),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(229,72,77,.08),
+            transparent 28%
+        ),
+        var(--bg);
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   SUBTLE BACKGROUND GRID
+   ========================================================= */
+
+body::before{
+    content:"";
+
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
+
+    background-size:40px 40px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.8),
+            transparent 90%
+        );
+
+    z-index:-1;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar{
+    min-height:68px;
+
+    padding:0 5%;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+
+    background:rgba(8,11,16,.88);
+
+    border-bottom:1px solid #202936;
+
+    backdrop-filter:blur(14px);
+
+    position:sticky;
+    top:0;
+    z-index:50;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.brandMark{
+    width:36px;
+    height:36px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid var(--red);
+    border-radius:6px;
+
+    color:var(--red);
+
+    font-family:Consolas,monospace;
+    font-size:15px;
+    font-weight:900;
+
+    box-shadow:
+        0 0 20px rgba(229,72,77,.08);
+}
+
+.brandName{
+    font-size:13px;
+    font-weight:900;
+
+    letter-spacing:1.3px;
+}
+
+.brandSub{
+    margin-top:2px;
+
+    color:var(--muted2);
+
+    font-size:9px;
+    font-weight:700;
+
+    letter-spacing:1px;
+}
+
+.gradeTag{
+    padding:7px 10px;
+
+    border:1px solid var(--line);
+    border-radius:5px;
+
+    color:#aab5c5;
+
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:1.2px;
+}
+
+
+/* =========================================================
+   ARENA NOTICE
+   ========================================================= */
+
+.noticeBar{
+    min-height:38px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:8px 20px;
+
+    border-bottom:1px solid rgba(230,189,74,.18);
+
+    background:
+        rgba(230,189,74,.045);
+
+    color:#d3c27d;
+
+    font-size:10px;
+    font-weight:700;
+
+    letter-spacing:.6px;
+
+    text-align:center;
+}
+
+.noticePrefix{
+    margin-right:10px;
+
+    color:var(--yellow);
+
+    font-weight:900;
+}
+
+#noticeText{
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
+}
+
+#noticeText.change{
+    opacity:0;
+    transform:translateY(4px);
+}
+
+
+/* =========================================================
+   ENTRY
+   ========================================================= */
+
+#entryScreen{
+    min-height:calc(100vh - 107px);
+
+    padding:65px 22px 90px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.entryWrap{
+    width:min(1050px,100%);
+
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+
+    gap:60px;
+
+    align-items:center;
+}
+
+.heroLabel{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin-bottom:17px;
+
+    color:var(--red);
+
+    font-size:10px;
+    font-weight:900;
+
+    letter-spacing:2px;
+}
+
+.heroLabel::before{
+    content:"";
+
+    width:34px;
+    height:2px;
+
+    background:var(--red);
+}
+
+.hero h1{
+    margin:0;
+
+    max-width:700px;
+
+    font-size:clamp(45px,7vw,80px);
+    line-height:.94;
+
+    letter-spacing:-4px;
+}
+
+.hero h1 span{
+    color:var(--red);
+}
+
+.heroText{
+    max-width:610px;
+
+    margin:24px 0 0;
+
+    color:var(--muted);
+
+    font-size:15px;
+    line-height:1.75;
+}
+
+.heroMeta{
+    margin-top:30px;
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.heroMeta span{
+    padding:7px 9px;
+
+    border:1px solid var(--line);
+    border-radius:4px;
+
+    color:#78879a;
+
+    font-size:9px;
+    font-weight:800;
+
+    letter-spacing:.8px;
+}
+
+
+/* ENTRY CARD */
+
+.registration{
+    position:relative;
+
+    padding:29px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(23,30,42,.96),
+            rgba(14,19,28,.98)
+        );
+
+    border:1px solid var(--line);
+    border-radius:10px;
+
+    box-shadow:var(--shadow);
+
+    overflow:hidden;
+}
+
+.registration::before{
+    content:"PLAYER REGISTRATION";
+
+    position:absolute;
+    top:0;
+    left:0;
+
+    padding:6px 10px;
+
+    background:var(--red);
+
+    color:white;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1.4px;
+}
+
+.registrationTop{
+    margin-top:16px;
+    margin-bottom:25px;
+}
+
+.registrationTop small{
+    color:var(--muted2);
+
+    font-size:9px;
+    font-weight:800;
+
+    letter-spacing:1.4px;
+}
+
+.registrationTop h2{
+    margin:6px 0 0;
+
+    font-size:22px;
+}
+
+.field{
+    margin-top:18px;
+}
+
+.field label{
+    display:block;
+
+    margin-bottom:7px;
+
+    color:#9aa7b9;
+
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:1.2px;
+}
+
+.field input{
+    width:100%;
+
+    padding:13px 14px;
+
+    border:1px solid var(--line2);
+    border-radius:5px;
+
+    background:#0c1119;
+
+    color:white;
+
+    font-family:inherit;
+    font-size:13px;
+
+    outline:none;
+
+    transition:.2s;
+}
+
+.field input::placeholder{
+    color:#4e5c6e;
+}
+
+.field input:focus{
+    border-color:var(--red);
+
+    box-shadow:
+        0 0 0 3px rgba(229,72,77,.08);
+}
+
+.fixedGrade{
+    margin-top:18px;
+
+    padding:12px 14px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border:1px solid var(--line);
+    border-radius:5px;
+
+    background:#0c1119;
+}
+
+.fixedGrade span:first-child{
+    color:#78879a;
+
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:1.1px;
+}
+
+.fixedGrade span:last-child{
+    color:var(--text);
+
+    font-size:11px;
+    font-weight:900;
+}
+
+.enterButton{
+    width:100%;
+
+    margin-top:23px;
+
+    padding:14px;
+
+    border:1px solid var(--red);
+    border-radius:5px;
+
+    background:var(--red);
+
+    color:white;
+
+    font-family:inherit;
+    font-size:10px;
+    font-weight:900;
+
+    letter-spacing:1.4px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.enterButton:hover{
+    background:#f05257;
+
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 8px 25px rgba(229,72,77,.18);
+}
+
+.entryReminder{
+    margin-top:17px;
+
+    color:#657386;
+
+    font-size:10px;
+    line-height:1.6;
+
+    text-align:center;
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+#dashboard{
+    display:none;
+
+    width:min(1180px,calc(100% - 34px));
+
+    margin:0 auto;
+
+    padding:32px 0 75px;
+}
+
+
+/* PLAYER BAR */
+
+.playerBar{
+    padding:16px 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+
+    background:rgba(17,23,34,.82);
+
+    border:1px solid var(--line);
+    border-radius:7px;
+}
+
+.playerLeft{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.playerNumber{
+    width:39px;
+    height:39px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid var(--red);
+    border-radius:4px;
+
+    color:var(--red);
+
+    font-family:Consolas,monospace;
+    font-size:11px;
+    font-weight:900;
+}
+
+.playerInfo small{
+    display:block;
+
+    margin-bottom:3px;
+
+    color:var(--muted2);
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1.2px;
+}
+
+.playerInfo strong{
+    display:block;
+
+    font-size:13px;
+}
+
+.playerInfo span{
+    display:block;
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+.changePlayer{
+    padding:8px 11px;
+
+    border:1px solid var(--line);
+    border-radius:4px;
+
+    background:transparent;
+
+    color:#8592a4;
+
+    font-family:inherit;
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:.8px;
+
+    cursor:pointer;
+}
+
+.changePlayer:hover{
+    border-color:#64748a;
+    color:white;
+}
+
+
+/* DASH INTRO */
+
+.dashboardHeading{
+    margin:38px 0 25px;
+}
+
+.dashboardHeading small{
+    color:var(--red);
+
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:1.6px;
+}
+
+.dashboardHeading h1{
+    margin:7px 0;
+
+    font-size:30px;
+    letter-spacing:-1px;
+}
+
+.dashboardHeading p{
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   CURRENT GAME
+   ========================================================= */
+
+.currentGame{
+    position:relative;
+
+    min-height:245px;
+
+    padding:31px;
+
+    display:grid;
+    grid-template-columns:1fr 300px;
+
+    gap:35px;
+
+    align-items:center;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(24,31,44,.98),
+            rgba(13,18,27,.98)
+        );
+
+    border:1px solid #3b2630;
+    border-radius:9px;
+
+    overflow:hidden;
+}
+
+.currentGame::before{
+    content:"01";
+
+    position:absolute;
+    right:-5px;
+    bottom:-52px;
+
+    color:rgba(229,72,77,.055);
+
+    font-family:Arial,sans-serif;
+    font-size:210px;
+    font-weight:900;
+
+    line-height:1;
+
+    pointer-events:none;
+}
+
+.currentEyebrow{
+    color:var(--red);
+
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:1.8px;
+}
+
+.currentGame h2{
+    margin:12px 0 7px;
+
+    font-size:30px;
+    letter-spacing:-1px;
+}
+
+.currentGame .componentLine{
+    color:#b6c0cd;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+.currentGame .description{
+    max-width:650px;
+
+    margin-top:18px;
+
+    color:var(--muted);
+
+    font-size:12px;
+    line-height:1.65;
+}
+
+.gameStats{
+    margin-top:23px;
+
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:10px;
+}
+
+.stat{
+    min-width:105px;
+
+    padding:10px 12px;
+
+    background:#0d121a;
+
+    border:1px solid var(--line);
+    border-radius:5px;
+}
+
+.stat small{
+    display:block;
+
+    margin-bottom:5px;
+
+    color:#59687a;
+
+    font-size:7px;
+    font-weight:900;
+
+    letter-spacing:1.2px;
+}
+
+.stat strong{
+    font-size:10px;
+}
+
+.difficulty{
+    color:var(--yellow);
+    letter-spacing:2px;
+}
+
+.currentAction{
+    position:relative;
+    z-index:2;
+
+    padding:22px;
+
+    background:rgba(8,11,16,.65);
+
+    border:1px solid var(--line);
+    border-radius:7px;
+
+    text-align:center;
+}
+
+.diamond{
+    width:50px;
+    height:50px;
+
+    margin:0 auto 17px;
+
+    display:grid;
+    place-items:center;
+
+    color:var(--red);
+
+    font-size:35px;
+
+    transform:rotate(0deg);
+}
+
+.currentAction small{
+    display:block;
+
+    color:#667589;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1.2px;
+}
+
+.currentAction strong{
+    display:block;
+
+    margin-top:5px;
+
+    font-size:12px;
+}
+
+.playCurrent{
+    width:100%;
+
+    margin-top:17px;
+
+    padding:12px;
+
+    border:1px solid var(--red);
+    border-radius:4px;
+
+    background:var(--red);
+
+    color:white;
+
+    font-family:inherit;
+    font-size:9px;
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.arenaSection{
+    margin-top:48px;
+}
+
+.sectionHeader{
+    margin-bottom:17px;
+
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.sectionTitle small{
+    color:#68778a;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1.5px;
+}
+
+.sectionTitle h2{
+    margin:5px 0;
+
+    font-size:20px;
+}
+
+.sectionTitle p{
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+.sectionRight{
+    color:#59687a;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================================================
+   CORE ARENA
+   ========================================================= */
+
+.coreGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    gap:13px;
+}
+
+.coreCard{
+    min-height:235px;
+
+    padding:22px;
+
+    display:flex;
+    flex-direction:column;
+
+    background:
+        linear-gradient(
+            150deg,
+            #141b27,
+            #0f151e
+        );
+
+    border:1px solid var(--line);
+    border-radius:7px;
+
+    transition:.2s;
+}
+
+.coreCard:hover{
+    transform:translateY(-3px);
+
+    border-color:#43526a;
+
+    box-shadow:
+        0 16px 35px rgba(0,0,0,.2);
+}
+
+.coreTop{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.suit{
+    font-size:31px;
+    line-height:1;
+}
+
+.suit.diamondSuit{
+    color:var(--red);
+}
+
+.suit.clubSuit{
+    color:var(--blue);
+}
+
+.suit.heartSuit{
+    color:var(--yellow);
+}
+
+.openBadge{
+    padding:5px 7px;
+
+    border:1px solid rgba(85,185,138,.25);
+    border-radius:4px;
+
+    background:var(--green-soft);
+
+    color:var(--green);
+
+    font-size:7px;
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+.coreCard h3{
+    margin:23px 0 5px;
+
+    font-size:17px;
+}
+
+.coreSubtitle{
+    color:#718095;
+
+    font-size:9px;
+    font-weight:800;
+
+    letter-spacing:.5px;
+}
+
+.coreDescription{
+    margin:14px 0 20px;
+
+    color:var(--muted);
+
+    font-size:11px;
+    line-height:1.6;
+}
+
+.coreFooter{
+    margin-top:auto;
+
+    padding-top:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+    border-top:1px solid #202a38;
+}
+
+.coreFooter span{
+    color:#58677a;
+
+    font-size:8px;
+}
+
+.corePlay{
+    border:0;
+
+    background:transparent;
+
+    color:#dce4ef;
+
+    font-family:inherit;
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:.9px;
+
+    cursor:pointer;
+}
+
+.corePlay:hover{
+    color:var(--red);
+}
+
+
+/* =========================================================
+   WEEKLY GAME LIST
+   ========================================================= */
+
+.gameList{
+    display:flex;
+    flex-direction:column;
+
+    gap:9px;
+}
+
+.gameRow{
+    min-height:91px;
+
+    padding:15px 17px;
+
+    display:grid;
+    grid-template-columns:65px 1fr 155px 105px;
+
+    gap:17px;
+
+    align-items:center;
+
+    background:#111722;
+
+    border:1px solid var(--line);
+    border-radius:6px;
+
+    transition:.2s;
+}
+
+.gameRow.available:hover{
+    border-color:#5d3540;
+
+    transform:translateX(3px);
+}
+
+.gameRow.locked{
+    background:#0e131b;
+
+    opacity:.68;
+}
+
+.gameNumber{
+    height:57px;
+
+    display:grid;
+    place-items:center;
+
+    border-right:1px solid var(--line);
+
+    color:#647387;
+
+    font-family:Consolas,monospace;
+    font-size:16px;
+    font-weight:900;
+}
+
+.gameRow.available .gameNumber{
+    color:var(--red);
+}
+
+.gameInfo h3{
+    margin:0 0 5px;
+
+    font-size:13px;
+}
+
+.gameInfo p{
+    margin:0;
+
+    color:#78869a;
+
+    font-size:10px;
+}
+
+.gameConcept{
+    color:#657488;
+
+    font-size:9px;
+    line-height:1.45;
+}
+
+.gameStatus{
+    justify-self:end;
+
+    padding:6px 8px;
+
+    border-radius:4px;
+
+    font-size:7px;
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    text-align:center;
+}
+
+.gameStatus.available{
+    background:var(--red-soft);
+
+    border:1px solid rgba(229,72,77,.25);
+
+    color:#ef777b;
+}
+
+.gameStatus.locked{
+    background:rgba(255,255,255,.025);
+
+    border:1px solid var(--line);
+
+    color:#637084;
+}
+
+.gameStatus.cleared{
+    background:var(--green-soft);
+
+    border:1px solid rgba(85,185,138,.25);
+
+    color:var(--green);
+}
+
+.gameStatus.upcoming{
+    background:var(--yellow-soft);
+
+    border:1px solid rgba(230,189,74,.22);
+
+    color:var(--yellow);
+}
+
+.gameRow.available{
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   PT AREA
+   ========================================================= */
+
+.ptRow{
+    border-left:3px solid var(--yellow);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer{
+    margin-top:60px;
+
+    padding:25px 0 5px;
+
+    display:flex;
+    justify-content:space-between;
+
+    gap:20px;
+
+    border-top:1px solid #202936;
+
+    color:#4e5c6e;
+
+    font-size:8px;
+    font-weight:800;
+
+    letter-spacing:.6px;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+#modalOverlay{
+    position:fixed;
+    inset:0;
+
+    z-index:100;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.78);
+
+    backdrop-filter:blur(5px);
+}
+
+.modal{
+    width:min(560px,100%);
+
+    background:
+        linear-gradient(
+            145deg,
+            #151c28,
+            #0e131b
+        );
+
+    border:1px solid #344155;
+    border-radius:8px;
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.65);
+
+    overflow:hidden;
+
+    animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:translateY(12px) scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.modalHeader{
+    min-height:54px;
+
+    padding:0 15px 0 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    border-bottom:1px solid var(--line);
+}
+
+.modalHeader span{
+    color:#758397;
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1.5px;
+}
+
+.closeModal{
+    width:33px;
+    height:33px;
+
+    display:grid;
+    place-items:center;
+
+    padding:0;
+
+    border:1px solid var(--line);
+    border-radius:4px;
+
+    background:transparent;
+
+    color:#8d9aac;
+
+    font-size:21px;
+    line-height:1;
+
+    cursor:pointer;
+}
+
+.closeModal:hover{
+    border-color:var(--red);
+    color:var(--red);
+}
+
+.modalBody{
+    padding:28px 25px;
+}
+
+.modalSuit{
+    margin-bottom:15px;
+
+    color:var(--red);
+
+    font-size:39px;
+    line-height:1;
+}
+
+.modalLabel{
+    margin-bottom:7px;
+
+    color:var(--red);
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1.5px;
+}
+
+.modalBody h2{
+    margin:0;
+
+    font-size:24px;
+}
+
+.modalSub{
+    margin-top:6px;
+
+    color:#8794a6;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+.modalDescription{
+    margin:20px 0 0;
+
+    color:#9ba7b7;
+
+    font-size:12px;
+    line-height:1.7;
+}
+
+.modalInfo{
+    margin-top:21px;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    gap:8px;
+}
+
+.modalInfoBox{
+    padding:10px;
+
+    background:#0b1017;
+
+    border:1px solid var(--line);
+    border-radius:4px;
+}
+
+.modalInfoBox small{
+    display:block;
+
+    margin-bottom:5px;
+
+    color:#566477;
+
+    font-size:7px;
+    font-weight:900;
+
+    letter-spacing:1px;
+}
+
+.modalInfoBox strong{
+    color:#dce3ed;
+
+    font-size:9px;
+}
+
+.practiceNotice{
+    margin-top:20px;
+
+    padding:12px 13px;
+
+    border-left:2px solid var(--yellow);
+
+    background:rgba(230,189,74,.06);
+
+    color:#a69a6e;
+
+    font-size:10px;
+    line-height:1.55;
+}
+
+.modalFooter{
+    padding:15px 20px;
+
+    display:flex;
+    justify-content:flex-end;
+
+    gap:8px;
+
+    border-top:1px solid var(--line);
+}
+
+.modalCancel,
+.modalContinue{
+    padding:10px 14px;
+
+    border-radius:4px;
+
+    font-family:inherit;
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+}
+
+.modalCancel{
+    border:1px solid var(--line);
+
+    background:transparent;
+
+    color:#7f8da0;
+}
+
+.modalContinue{
+    border:1px solid var(--red);
+
+    background:var(--red);
+
+    color:white;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+#toast{
+    position:fixed;
+
+    left:50%;
+    bottom:25px;
+
+    z-index:200;
+
+    min-width:260px;
+
+    padding:11px 15px;
+
+    transform:translate(-50%,25px);
+
+    border:1px solid #354155;
+    border-radius:5px;
+
+    background:#151c27;
+
+    color:#dce3ed;
+
+    font-size:9px;
+    font-weight:800;
+
+    text-align:center;
+
+    opacity:0;
+    pointer-events:none;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.4);
+
+    transition:.25s;
+}
+
+#toast.show{
+    opacity:1;
+
+    transform:translate(-50%,0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px){
+
+    .entryWrap{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+    .hero{
+        text-align:center;
+    }
+
+    .heroLabel{
+        justify-content:center;
+    }
+
+    .heroText{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .heroMeta{
+        justify-content:center;
+    }
+
+    .currentGame{
+        grid-template-columns:1fr;
+    }
+
+    .currentAction{
+        max-width:380px;
+    }
+
+    .coreGrid{
+        grid-template-columns:1fr;
+    }
+
+    .gameRow{
+        grid-template-columns:55px 1fr 95px;
+    }
+
+    .gameConcept{
+        display:none;
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .brandSub{
+        display:none;
+    }
+
+    #entryScreen{
+        padding-top:45px;
+    }
+
+    .hero h1{
+        font-size:48px;
+        letter-spacing:-2px;
+    }
+
+    .currentGame{
+        padding:22px;
+    }
+
+    .currentGame h2{
+        font-size:24px;
+    }
+
+    .gameRow{
+        grid-template-columns:45px 1fr;
+    }
+
+    .gameStatus{
+        grid-column:2;
+
+        justify-self:start;
+    }
+
+    .modalInfo{
+        grid-template-columns:1fr;
+    }
+
+    .footer{
+        flex-direction:column;
+    }
+
+    .sectionHeader{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     HEADER
+     ====================================================== -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brandMark">
+            &lt;/&gt;
+        </div>
+
+        <div>
+            <div class="brandName">
+                ROBOTICS CODE ARENA
+            </div>
+
+            <div class="brandSub">
+                INTERACTIVE PRACTICE PLATFORM
+            </div>
+        </div>
+
+    </div>
+
+    <div class="gradeTag">
+        GRADE 8
+    </div>
+
+</header>
+
+
+<!-- ======================================================
+     ARENA NOTICE
+     ====================================================== -->
+
+<div class="noticeBar">
+
+    <span class="noticePrefix">
+        ARENA NOTICE //
+    </span>
+
+    <span id="noticeText">
+        Practice mode only. Take your time and read each question carefully.
+    </span>
+
+</div>
+
+
+<!-- ======================================================
+     ENTRY SCREEN
+     ====================================================== -->
+
+<section id="entryScreen">
+
+    <div class="entryWrap">
+
+
+        <!-- HERO -->
+
+        <div class="hero">
+
+            <div class="heroLabel">
+                GRADE 8 ROBOTICS
+            </div>
+
+            <h1>
+                ENTER THE<br>
+                <span>CODE ARENA.</span>
+            </h1>
+
+            <p class="heroText">
+                Review your lessons, test your coding logic,
+                analyze circuits, and clear weekly Robotics
+                challenges. This arena is designed for practice,
+                not pressure.
+            </p>
+
+            <div class="heroMeta">
+
+                <span>CODE READING</span>
+
+                <span>CIRCUITS</span>
+
+                <span>SENSORS</span>
+
+                <span>ROBOTICS CONCEPTS</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- REGISTRATION -->
+
+        <div class="registration">
+
+            <div class="registrationTop">
+
+                <small>
+                    ARENA ACCESS
+                </small>
+
+                <h2>
+                    Identify Your Player
+                </h2>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="studentName">
+                    STUDENT NAME
+                </label>
+
+                <input
+                    id="studentName"
+                    type="text"
+                    placeholder="Enter your full name"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="studentSection">
+                    SECTION
+                </label>
+
+                <input
+                    id="studentSection"
+                    type="text"
+                    placeholder="Enter your section"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="fixedGrade">
+
+                <span>GRADE LEVEL</span>
+
+                <span>GRADE 8</span>
+
+            </div>
+
+
+            <button
+                class="enterButton"
+                onclick="enterArena()"
+            >
+                ENTER THE ARENA
+            </button>
+
+
+            <div class="entryReminder">
+                No grades. No penalties. Use the arena to
+                review what you learned in class.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     DASHBOARD
+     ====================================================== -->
+
+<main id="dashboard">
+
+
+    <!-- PLAYER BAR -->
+
+    <section class="playerBar">
+
+        <div class="playerLeft">
+
+            <div class="playerNumber">
+                P8
+            </div>
+
+            <div class="playerInfo">
+
+                <small>
+                    ACTIVE PLAYER
+                </small>
+
+                <strong id="displayName">
+                    Student
+                </strong>
+
+                <span id="displayDetails">
+                    Grade 8
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="changePlayer"
+            onclick="changePlayer()"
+        >
+            CHANGE PLAYER
+        </button>
+
+    </section>
+
+
+    <!-- DASHBOARD HEADING -->
+
+    <section class="dashboardHeading">
+
+        <small>
+            ARENA LOBBY
+        </small>
+
+        <h1 id="welcomeHeading">
+            Welcome to the Arena
+        </h1>
+
+        <p>
+            Choose a practice category or enter the current weekly game.
+        </p>
+
+    </section>
+
+
+    <!-- ==================================================
+         CURRENT WEEKLY GAME
+         ================================================== -->
+
+    <section class="currentGame">
+
+        <div>
+
+            <div class="currentEyebrow">
+                CURRENT GAME // WEEK 01
+            </div>
+
+            <h2>
+                Environmental Monitoring
+            </h2>
+
+            <div class="componentLine">
+                DHT11 + MQ135
+            </div>
+
+            <p class="description">
+                Review temperature, humidity, air quality,
+                sensor readings, Serial Monitor output,
+                and simple Arduino decision-making.
+            </p>
+
+
+            <div class="gameStats">
+
+                <div class="stat">
+
+                    <small>
+                        DIFFICULTY
+                    </small>
+
+                    <strong class="difficulty">
+                        ● ○ ○
+                    </strong>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <small>
+                        QUESTIONS
+                    </small>
+
+                    <strong>
+                        5 ITEMS
+                    </strong>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <small>
+                        TARGET
+                    </small>
+
+                    <strong>
+                        3 / 5
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="currentAction">
+
+            <div class="diamond">
+                ♦
+            </div>
+
+            <small>
+                GAME 01
+            </small>
+
+            <strong>
+                ENVIRONMENTAL MONITORING
+            </strong>
+
+            <button
+                class="playCurrent"
+                onclick="openWeeklyGame(1)"
+            >
+                ENTER GAME
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         CORE ARENA
+         ================================================== -->
+
+    <section class="arenaSection">
+
+        <div class="sectionHeader">
+
+            <div class="sectionTitle">
+
+                <small>
+                    PRACTICE ANYTIME
+                </small>
+
+                <h2>
+                    Core Arena
+                </h2>
+
+                <p>
+                    These practice categories are always available.
+                </p>
+
+            </div>
+
+            <div class="sectionRight">
+                3 OPEN CATEGORIES
+            </div>
+
+        </div>
+
+
+        <div class="coreGrid">
+
+
+            <!-- CODE QUEST -->
+
+            <article class="coreCard">
+
+                <div class="coreTop">
+
+                    <div class="suit diamondSuit">
+                        ♦
+                    </div>
+
+                    <div class="openBadge">
+                        OPEN
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Code Quest
+                </h3>
+
+                <div class="coreSubtitle">
+                    ARDUINO PROGRAMMING
+                </div>
+
+
+                <p class="coreDescription">
+                    Practice Arduino commands, variables,
+                    setup and loop, input and output,
+                    if/else statements, code reading,
+                    and simple debugging.
+                </p>
+
+
+                <div class="coreFooter">
+
+                    <span>
+                        Unlimited practice
+                    </span>
+
+                    <button
+                        class="corePlay"
+                        onclick="openCoreGame('code')"
+                    >
+                        ENTER →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- CIRCUIT QUEST -->
+
+            <article class="coreCard">
+
+                <div class="coreTop">
+
+                    <div class="suit clubSuit">
+                        ♣
+                    </div>
+
+                    <div class="openBadge">
+                        OPEN
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Circuit Quest
+                </h3>
+
+                <div class="coreSubtitle">
+                    CIRCUITS & COMPONENTS
+                </div>
+
+
+                <p class="coreDescription">
+                    Review Arduino pins, sensors,
+                    LEDs, buzzers, breadboards,
+                    input and output devices,
+                    and basic circuit connections.
+                </p>
+
+
+                <div class="coreFooter">
+
+                    <span>
+                        Unlimited practice
+                    </span>
+
+                    <button
+                        class="corePlay"
+                        onclick="openCoreGame('circuit')"
+                    >
+                        ENTER →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- ROBO RECALL -->
+
+            <article class="coreCard">
+
+                <div class="coreTop">
+
+                    <div class="suit heartSuit">
+                        ♥
+                    </div>
+
+                    <div class="openBadge">
+                        OPEN
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Robo Recall
+                </h3>
+
+                <div class="coreSubtitle">
+                    CONCEPTS & TERMINOLOGY
+                </div>
+
+
+                <p class="coreDescription">
+                    Review important Robotics terms,
+                    sensor functions, component purposes,
+                    programming concepts, and ideas
+                    discussed during class.
+                </p>
+
+
+                <div class="coreFooter">
+
+                    <span>
+                        Unlimited practice
+                    </span>
+
+                    <button
+                        class="corePlay"
+                        onclick="openCoreGame('recall')"
+                    >
+                        ENTER →
+                    </button>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         WEEKLY GAMES
+         ================================================== -->
+
+    <section class="arenaSection">
+
+        <div class="sectionHeader">
+
+            <div class="sectionTitle">
+
+                <small>
+                    QUARTER MISSION MAP
+                </small>
+
+                <h2>
+                    Weekly Games
+                </h2>
+
+                <p>
+                    New games become available as classroom lessons are completed.
+                </p>
+
+            </div>
+
+            <div class="sectionRight">
+                7 GAMES
+            </div>
+
+        </div>
+
+
+        <div class="gameList">
+
+
+            <!-- GAME 1 -->
+
+            <article
+                class="gameRow available"
+                id="gameRow1"
+                onclick="openWeeklyGame(1)"
+            >
+
+                <div class="gameNumber">
+                    01
+                </div>
+
+                <div class="gameInfo">
+
+                    <h3>
+                        Environmental Monitoring System
+                    </h3>
+
+                    <p>
+                        DHT11 + MQ135
+                    </p>
+
+                </div>
+
+                <div class="gameConcept">
+                    Temperature • Humidity • Air Quality • Sensor Readings
+                </div>
+
+                <div
+                    class="gameStatus available"
+                    id="gameStatus1"
+                >
+                    AVAILABLE
+                </div>
+
+            </article>
+
+
+            <!-- GAME 2 -->
+
+            <article
+                class="gameRow locked"
+                id="gameRow2"
+                onclick="lockedGame(2)"
+            >
+
+                <div class="gameNumber">
+                    02
+                </div>
+
+                <div class="gameInfo">
+
+                    <h3>
+                        Smart Motion Alarm System
+                    </h3>
+
+                    <p>
+                        PIR + Buzzer + LED
+                    </p>
+
+                </div>
+
+                <div class="gameConcept">
+                    Motion Detection • Digital Input • Alarm Output
+                </div>
+
+                <div
+                    class="gameStatus locked"
+                    id="gameStatus2"
+                >
+                    LOCKED
+                </div>
+
+            </article>
+
+
+            <!-- GAME 3 -->
+
+            <article
+                class="gameRow locked"
+                id="gameRow3"
+                onclick="lockedGame(3)"
+            >
+
+                <div class="gameNumber">
+                    03
+                </div>
+
+                <div class="gameInfo">
+
+                    <h3>
+                        Password Door Lock System
+                    </h3>
+
+                    <p>
+                        Keypad + LCD + Stepper Motor
+                    </p>
+
+                </div>
+
+                <div class="gameConcept">
+                    User Input • Password Checking • Motor Control
+                </div>
+
+                <div
+                    class="gameStatus locked"
+                    id="gameStatus3"
+                >
+                    LOCKED
+                </div>
+
+            </article>
+
+
+            <!-- GAME 4 -->
+
+            <article
+                class="gameRow locked"
+                id="gameRow4"
+                onclick="lockedGame(4)"
+            >
+
+                <div class="gameNumber">
+                    04
+                </div>
+
+                <div class="gameInfo">
+
+                    <h3>
+                        RFID Access Control System
+                    </h3>
+
+                    <p>
+                        RFID + Stepper Motor + LEDs
+                    </p>
+
+                </div>
+
+                <div class="gameConcept">
+                    UID • Authentication • Access Control
+                </div>
+
+                <div
+                    class="gameStatus locked"
+                    id="gameStatus4"
+                >
+                    LOCKED
+                </div>
+
+            </article>
+
+
+            <!-- GAME 5 -->
+
+            <article
+                class="gameRow locked"
+                id="gameRow5"
+                onclick="lockedGame(5)"
+            >
+
+                <div class="gameNumber">
+                    05
+                </div>
+
+                <div class="gameInfo">
+
+                    <h3>
+                        System Integration Challenge
+                    </h3>
+
+                    <p>
+                        Selected Components
+                    </p>
+
+                </div>
+
+                <div class="gameConcept">
+                    Sensors • Input • Processing • Output
+                </div>
+
+                <div
+                    class="gameStatus locked"
+                    id="gameStatus5"
+                >
+                    LOCKED
+                </div>
+
+            </article>
+
+
+            <!-- GAME 6 -->
+
+            <article
+                class="gameRow locked ptRow"
+                id="gameRow6"
+                onclick="lockedGame(6)"
+            >
+
+                <div class="gameNumber">
+                    06
+                </div>
+
+                <div class="gameInfo">
+
+                    <h3>
+                        Performance Task Development
+                    </h3>
+
+                    <p>
+                        Multiple Components
+                    </p>
+
+                </div>
+
+                <div class="gameConcept">
+                    Design • Build • Program • Test
+                </div>
+
+                <div
+                    class="gameStatus locked"
+                    id="gameStatus6"
+                >
+                    LOCKED
+                </div>
+
+            </article>
+
+
+            <!-- GAME 7 -->
+
+            <article
+                class="gameRow locked ptRow"
+                id="gameRow7"
+                onclick="lockedGame(7)"
+            >
+
+                <div class="gameNumber">
+                    07
+                </div>
+
+                <div class="gameInfo">
+
+                    <h3>
+                        Final Arena
+                    </h3>
+
+                    <p>
+                        PT Demo + Summative / Oral
+                    </p>
+
+                </div>
+
+                <div class="gameConcept">
+                    Demonstration • Explanation • Understanding
+                </div>
+
+                <div
+                    class="gameStatus locked"
+                    id="gameStatus7"
+                >
+                    LOCKED
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <span>
+            ROBOTICS CODE ARENA // GRADE 8
+        </span>
+
+        <span>
+            PRACTICE MODE • NOT GRADED
+        </span>
+
+    </footer>
+
+</main>
+
+
+<!-- ======================================================
+     MODAL
+     ====================================================== -->
+
+<div
+    id="modalOverlay"
+    onclick="overlayClick(event)"
+>
+
+    <div class="modal">
+
+        <div class="modalHeader">
+
+            <span>
+                ARENA GAME INFORMATION
+            </span>
+
+            <button
+                class="closeModal"
+                onclick="closeModal()"
+                aria-label="Close"
+            >
+                &times;
+            </button>
+
+        </div>
+
+
+        <div class="modalBody">
+
+            <div
+                class="modalSuit"
+                id="modalSuit"
+            >
+                ♦
+            </div>
+
+            <div
+                class="modalLabel"
+                id="modalLabel"
+            >
+                CORE ARENA
+            </div>
+
+            <h2 id="modalTitle">
+                Code Quest
+            </h2>
+
+            <div
+                class="modalSub"
+                id="modalSub"
+            >
+                Arduino Programming
+            </div>
+
+            <p
+                class="modalDescription"
+                id="modalDescription"
+            >
+                Challenge description.
+            </p>
+
+
+            <div
+                class="modalInfo"
+                id="modalInfo"
+            >
+
+                <div class="modalInfoBox">
+
+                    <small>
+                        LEVEL
+                    </small>
+
+                    <strong id="modalLevel">
+                        EASY
+                    </strong>
+
+                </div>
+
+                <div class="modalInfoBox">
+
+                    <small>
+                        MODE
+                    </small>
+
+                    <strong id="modalMode">
+                        PRACTICE
+                    </strong>
+
+                </div>
+
+                <div class="modalInfoBox">
+
+                    <small>
+                        STATUS
+                    </small>
+
+                    <strong id="modalStatus">
+                        OPEN
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="practiceNotice">
+
+                This arena is for practice. Questions will focus
+                on Grade 8 Robotics concepts discussed in class.
+                Take your time, read carefully, and learn from
+                incorrect answers.
+
+            </div>
+
+        </div>
+
+
+        <div class="modalFooter">
+
+            <button
+                class="modalCancel"
+                onclick="closeModal()"
+            >
+                CLOSE
+            </button>
+
+            <button
+                class="modalContinue"
+                id="modalContinue"
+                onclick="startSelectedGame()"
+            >
+                CONTINUE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     TOAST
+     ====================================================== -->
+
+<div id="toast">
+    Arena message
+</div>
+
+
+<script>
+
+/* =========================================================
+   ROBOTICS CODE ARENA
+   V4 CONFIGURATION
+   ========================================================= */
+
+
+/*
+   =========================================================
+   TEACHER CONTROL
+
+   Change CURRENT_WEEK when you want to open
+   another weekly lesson.
+
+   1 = Environmental Monitoring
+   2 = Smart Motion Alarm
+   3 = Password Door Lock
+   4 = RFID Access Control
+   5 = System Integration
+   6 = PT Development
+   7 = Final Arena
+
+   Example:
+
+   const CURRENT_WEEK = 2;
+
+   This will make Games 1 and 2 available.
+   =========================================================
+*/
+
+const CURRENT_WEEK = 1;
+
+
+/*
+   This is only the interface foundation.
+
+   Actual question banks will be added next.
+*/
+
+let selectedGame = null;
+
+
+/* =========================================================
+   WEEKLY GAME DATA
+   ========================================================= */
+
+const weeklyGames = {
+
+    1:{
+        number:"01",
+        suit:"♦",
+        title:"Environmental Monitoring",
+        subtitle:"DHT11 + MQ135",
+        description:
+            "Practice temperature, humidity, air quality, sensor readings, Serial Monitor output, and simple Arduino decision-making.",
+        concepts:
+            "Temperature • Humidity • Air Quality",
+        level:"EASY"
+    },
+
+    2:{
+        number:"02",
+        suit:"♣",
+        title:"Smart Motion Alarm",
+        subtitle:"PIR + Buzzer + LED",
+        description:
+            "Practice motion detection, digital input, LED indicators, buzzer output, and simple alarm logic.",
+        concepts:
+            "Motion • Digital Input • Alarm Output",
+        level:"EASY"
+    },
+
+    3:{
+        number:"03",
+        suit:"♥",
+        title:"Password Door Lock",
+        subtitle:"Keypad + LCD + Stepper Motor",
+        description:
+            "Practice keypad input, password checking, LCD feedback, and basic stepper motor control.",
+        concepts:
+            "User Input • Password • Motor Control",
+        level:"EASY"
+    },
+
+    4:{
+        number:"04",
+        suit:"♠",
+        title:"RFID Access Control",
+        subtitle:"RFID + Stepper Motor + LEDs",
+        description:
+            "Practice RFID concepts, UID checking, authentication, LED indicators, and access-control logic.",
+        concepts:
+            "UID • Authentication • Access Control",
+        level:"EASY"
+    },
+
+    5:{
+        number:"05",
+        suit:"◇",
+        title:"System Integration Challenge",
+        subtitle:"Selected Components",
+        description:
+            "Review how sensors, input devices, processing, and output components work together in one Robotics system.",
+        concepts:
+            "Input • Process • Output",
+        level:"MODERATE"
+    },
+
+    6:{
+        number:"06",
+        suit:"◇",
+        title:"Performance Task Development",
+        subtitle:"Design + Build + Code",
+        description:
+            "Use this area to prepare for the performance task by reviewing system design, components, programming, testing, and troubleshooting.",
+        concepts:
+            "Design • Build • Program • Test",
+        level:"PREPARATION"
+    },
+
+    7:{
+        number:"07",
+        suit:"★",
+        title:"Final Arena",
+        subtitle:"PT Demo + Summative / Oral",
+        description:
+            "Final review for demonstrating your project and explaining how your Robotics system and code work.",
+        concepts:
+            "Demonstration • Explanation • Understanding",
+        level:"FINAL REVIEW"
+    }
+
+};
+
+
+/* =========================================================
+   CORE ARENA DATA
+   ========================================================= */
+
+const coreGames = {
+
+    code:{
+        suit:"♦",
+        title:"Code Quest",
+        subtitle:"Arduino Programming",
+        description:
+            "Practice Arduino commands, variables, setup and loop, digital and analog input, output commands, if/else statements, code reading, and simple debugging.",
+        level:"EASY",
+        mode:"UNLIMITED"
+    },
+
+    circuit:{
+        suit:"♣",
+        title:"Circuit Quest",
+        subtitle:"Circuits & Components",
+        description:
+            "Practice identifying components, Arduino pins, input and output devices, basic wiring, sensor connections, LEDs, buzzers, and circuit behavior.",
+        level:"EASY",
+        mode:"UNLIMITED"
+    },
+
+    recall:{
+        suit:"♥",
+        title:"Robo Recall",
+        subtitle:"Concepts & Terminology",
+        description:
+            "Review important Robotics vocabulary, component functions, sensor purposes, programming concepts, and ideas discussed in your Grade 8 lessons.",
+        level:"EASY",
+        mode:"UNLIMITED"
+    }
+
+};
+
+
+/* =========================================================
+   PLAYER REGISTRATION
+   ========================================================= */
+
+function enterArena(){
+
+    const name =
+        document
+        .getElementById("studentName")
+        .value
+        .trim();
+
+    const section =
+        document
+        .getElementById("studentSection")
+        .value
+        .trim();
+
+
+    if(!name || !section){
+
+        showToast(
+            "Please enter your name and section."
+        );
+
+        return;
+    }
+
+
+    const student = {
+        name:name,
+        section:section,
+        grade:"Grade 8"
+    };
+
+
+    localStorage.setItem(
+        "roboticsArenaGrade8Student",
+        JSON.stringify(student)
+    );
+
+
+    showDashboard(student);
+
+}
+
+
+/* =========================================================
+   SHOW DASHBOARD
+   ========================================================= */
+
+function showDashboard(student){
+
+    document
+        .getElementById("entryScreen")
+        .style
+        .display = "none";
+
+
+    document
+        .getElementById("dashboard")
+        .style
+        .display = "block";
+
+
+    document
+        .getElementById("displayName")
+        .textContent =
+        student.name;
+
+
+    document
+        .getElementById("displayDetails")
+        .textContent =
+        "Grade 8 • " + student.section;
+
+
+    const firstName =
+        student.name
+        .split(" ")[0];
+
+
+    document
+        .getElementById("welcomeHeading")
+        .textContent =
+        "Welcome, " + firstName + ".";
+
+
+    applyWeeklyAvailability();
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   RESTORE PLAYER
+   ========================================================= */
+
+function restorePlayer(){
+
+    const saved =
+        localStorage.getItem(
+            "roboticsArenaGrade8Student"
+        );
+
+
+    if(!saved){
+        return;
+    }
+
+
+    try{
+
+        const student =
+            JSON.parse(saved);
+
+
+        showDashboard(student);
+
+    }
+
+    catch(error){
+
+        localStorage.removeItem(
+            "roboticsArenaGrade8Student"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CHANGE PLAYER
+   ========================================================= */
+
+function changePlayer(){
+
+    localStorage.removeItem(
+        "roboticsArenaGrade8Student"
+    );
+
+
+    document
+        .getElementById("dashboard")
+        .style
+        .display = "none";
+
+
+    document
+        .getElementById("entryScreen")
+        .style
+        .display = "flex";
+
+
+    document
+        .getElementById("studentName")
+        .value = "";
+
+
+    document
+        .getElementById("studentSection")
+        .value = "";
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   APPLY WEEKLY AVAILABILITY
+   ========================================================= */
+
+function applyWeeklyAvailability(){
+
+    for(let i = 1; i <= 7; i++){
+
+        const row =
+            document.getElementById(
+                "gameRow" + i
+            );
+
+        const status =
+            document.getElementById(
+                "gameStatus" + i
+            );
+
+
+        if(!row || !status){
+            continue;
+        }
+
+
+        if(i <= CURRENT_WEEK){
+
+            row.classList.remove(
+                "locked"
+            );
+
+            row.classList.add(
+                "available"
+            );
+
+
+            status.className =
+                "gameStatus available";
+
+
+            status.textContent =
+                "AVAILABLE";
+
+
+            row.onclick =
+                function(){
+
+                    openWeeklyGame(i);
+
+                };
+
+        }
+
+        else{
+
+            row.classList.remove(
+                "available"
+            );
+
+            row.classList.add(
+                "locked"
+            );
+
+
+            status.className =
+                "gameStatus locked";
+
+
+            status.textContent =
+                "LOCKED";
+
+
+            row.onclick =
+                function(){
+
+                    lockedGame(i);
+
+                };
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   CORE ARENA
+   ========================================================= */
+
+function openCoreGame(type){
+
+    const game =
+        coreGames[type];
+
+
+    if(!game){
+        return;
+    }
+
+
+    selectedGame = {
+        type:"core",
+        id:type
+    };
+
+
+    document
+        .getElementById("modalSuit")
+        .textContent =
+        game.suit;
+
+
+    document
+        .getElementById("modalLabel")
+        .textContent =
+        "CORE ARENA";
+
+
+    document
+        .getElementById("modalTitle")
+        .textContent =
+        game.title;
+
+
+    document
+        .getElementById("modalSub")
+        .textContent =
+        game.subtitle;
+
+
+    document
+        .getElementById("modalDescription")
+        .textContent =
+        game.description;
+
+
+    document
+        .getElementById("modalLevel")
+        .textContent =
+        game.level;
+
+
+    document
+        .getElementById("modalMode")
+        .textContent =
+        game.mode;
+
+
+    document
+        .getElementById("modalStatus")
+        .textContent =
+        "OPEN";
+
+
+    document
+        .getElementById("modalContinue")
+        .style
+        .display =
+        "inline-block";
+
+
+    document
+        .getElementById("modalContinue")
+        .textContent =
+        "ENTER";
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   WEEKLY GAME
+   ========================================================= */
+
+function openWeeklyGame(number){
+
+    if(number > CURRENT_WEEK){
+
+        lockedGame(number);
+
+        return;
+
+    }
+
+
+    const game =
+        weeklyGames[number];
+
+
+    selectedGame = {
+        type:"weekly",
+        id:number
+    };
+
+
+    document
+        .getElementById("modalSuit")
+        .textContent =
+        game.suit;
+
+
+    document
+        .getElementById("modalLabel")
+        .textContent =
+        "GAME " + game.number;
+
+
+    document
+        .getElementById("modalTitle")
+        .textContent =
+        game.title;
+
+
+    document
+        .getElementById("modalSub")
+        .textContent =
+        game.subtitle;
+
+
+    document
+        .getElementById("modalDescription")
+        .textContent =
+        game.description;
+
+
+    document
+        .getElementById("modalLevel")
+        .textContent =
+        game.level;
+
+
+    document
+        .getElementById("modalMode")
+        .textContent =
+        "WEEKLY GAME";
+
+
+    document
+        .getElementById("modalStatus")
+        .textContent =
+        "AVAILABLE";
+
+
+    document
+        .getElementById("modalContinue")
+        .style
+        .display =
+        "inline-block";
+
+
+    document
+        .getElementById("modalContinue")
+        .textContent =
+        "ENTER GAME";
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   LOCKED GAME
+   ========================================================= */
+
+function lockedGame(number){
+
+    const game =
+        weeklyGames[number];
+
+
+    selectedGame = null;
+
+
+    document
+        .getElementById("modalSuit")
+        .textContent =
+        game.suit;
+
+
+    document
+        .getElementById("modalLabel")
+        .textContent =
+        "GAME " + game.number;
+
+
+    document
+        .getElementById("modalTitle")
+        .textContent =
+        game.title;
+
+
+    document
+        .getElementById("modalSub")
+        .textContent =
+        game.subtitle;
+
+
+    document
+        .getElementById("modalDescription")
+        .textContent =
+        "This game is not available yet. It will open after the corresponding classroom lesson.";
+
+
+    document
+        .getElementById("modalLevel")
+        .textContent =
+        game.level;
+
+
+    document
+        .getElementById("modalMode")
+        .textContent =
+        "WEEKLY GAME";
+
+
+    document
+        .getElementById("modalStatus")
+        .textContent =
+        "LOCKED";
+
+
+    document
+        .getElementById("modalContinue")
+        .style
+        .display =
+        "none";
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   START SELECTED GAME
+
+   Actual question engine will replace this
+   placeholder in the next version.
+   ========================================================= */
+
+function startSelectedGame(){
+
+    if(!selectedGame){
+        return;
+    }
+
+
+    let title = "";
+
+
+    if(selectedGame.type === "core"){
+
+        title =
+            coreGames[
+                selectedGame.id
+            ].title;
+
+    }
+
+    else{
+
+        title =
+            weeklyGames[
+                selectedGame.id
+            ].title;
+
+    }
+
+
+    closeModal();
+
+
+    showToast(
+        title +
+        " is ready for its question bank."
+    );
+
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+function openModal(){
+
+    document
+        .getElementById("modalOverlay")
+        .style
+        .display =
+        "flex";
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("modalOverlay")
+        .style
+        .display =
+        "none";
+
+}
+
+
+function overlayClick(event){
+
+    if(
+        event.target.id ===
+        "modalOverlay"
+    ){
+
+        closeModal();
+
+    }
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ARENA NOTICE ROTATION
+   Replaces the random floating bubbles.
+   ========================================================= */
+
+const arenaNotices = [
+
+    "Practice mode only. Take your time and read each question carefully.",
+
+    "Incorrect answers are part of practice. Review the explanation and try again.",
+
+    "Code Quest, Circuit Quest, and Robo Recall are always available for review.",
+
+    "Weekly games follow the lessons discussed during Grade 8 Robotics class.",
+
+    "Think before you choose. Accuracy matters more than speed.",
+
+    "Use the arena to prepare for hands-on activities, projects, and assessments."
+
+];
+
+
+let noticeIndex = 0;
+
+
+function rotateNotice(){
+
+    const notice =
+        document.getElementById(
+            "noticeText"
+        );
+
+
+    notice.classList.add(
+        "change"
+    );
+
+
+    setTimeout(
+        function(){
+
+            noticeIndex =
+                (
+                    noticeIndex + 1
+                )
+                %
+                arenaNotices.length;
+
+
+            notice.textContent =
+                arenaNotices[
+                    noticeIndex
+                ];
+
+
+            notice.classList.remove(
+                "change"
+            );
+
+        },
+        250
+    );
+
+}
+
+
+setInterval(
+    rotateNotice,
+    6500
+);
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2800
+        );
+
+}
+
+
+/* =========================================================
+   STARTUP
+   ========================================================= */
+
+restorePlayer();
+
+</script>
+
+</body>
+</html>
